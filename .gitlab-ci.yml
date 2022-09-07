@@ -18,7 +18,6 @@ build-back:
   artifacts:
     paths:
       - game/game-backend/target/site/jacoco/jacoco.xml
-    paths:
       - game/game-backend/target/game-backend-0.0.1.jar
     expire_in: 1 hour
     
