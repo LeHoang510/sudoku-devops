@@ -6,3 +6,33 @@
 * {
   font-family: Bodo;
 }
+
+body{
+  margin:0;
+    padding:0;
+}
+
+div {
+  --size-cell: 60px;
+  --nb-cell: 9;
+  }
+  .board {
+  width: calc(var(--size-cell) * var(--nb-cell));
+  min-height: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+  }
+  .tile {
+  background: rgb(249, 249, 252);
+  width: calc(var(--size-cell) - 2.5px);
+  height: calc(var(--size-cell) - 2.5px);
+  text-align: center;
+  font-size: large;
+  border: 0.5px solid;
+  display: inline-block;
+  margin: 0.4px;
+  padding: 0px;
+  }
+
+  
