@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Sudoku';
-  
+  a = Array.from(Array(81).keys()).map(x => x + 1);
 }

@@ -11,6 +11,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
+import {MatGridListModule} from "@angular/material/grid-list"
 import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RouterModule} from "@angular/router";
@@ -35,7 +36,8 @@ import {InteractoModule, interactoTreeUndoProviders} from "interacto-angular";
         MatListModule,
         FormsModule,
         MatCheckboxModule,
-        RouterModule
+        RouterModule,
+        MatGridListModule
     ],
   providers: [interactoTreeUndoProviders(true)],
   bootstrap: [AppComponent]
