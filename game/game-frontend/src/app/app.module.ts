@@ -16,10 +16,16 @@ import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RouterModule} from "@angular/router";
 import {InteractoModule, interactoTreeUndoProviders} from "interacto-angular";
+import { BoardComponent } from './game/board/board.component';
+import { HistoryComponent } from './game/history/history.component';
+import { LeaderboardComponent } from './game/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BoardComponent,
+    HistoryComponent,
+    LeaderboardComponent
   ],
     imports: [
         BrowserModule,
