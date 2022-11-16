@@ -1,1 +1,11 @@
-<p>leaderboard works!</p>
+<button class="buttonRanking" (click)="openDialog()">
+    <img style="max-width:80%" src="../../../assets/ranking.svg">
+</button>
+
+    
+<mat-form-field appearance="fill">
+    <mat-label>Joueur</mat-label>
+    <input matInput [(ngModel)]="name">
+</mat-form-field>
+
+<p>Coups: </p>

@@ -19,13 +19,16 @@ import {InteractoModule, interactoTreeUndoProviders} from "interacto-angular";
 import { BoardComponent } from './game/board/board.component';
 import { HistoryComponent } from './game/history/history.component';
 import { LeaderboardComponent } from './game/leaderboard/leaderboard.component';
+import { DialogComponent } from './game/leaderboard/dialog/dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     HistoryComponent,
-    LeaderboardComponent
+    LeaderboardComponent,
+    DialogComponent
   ],
     imports: [
         BrowserModule,
@@ -43,7 +46,8 @@ import { LeaderboardComponent } from './game/leaderboard/leaderboard.component';
         FormsModule,
         MatCheckboxModule,
         RouterModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDialogModule
     ],
   providers: [interactoTreeUndoProviders(true)],
   bootstrap: [AppComponent]
