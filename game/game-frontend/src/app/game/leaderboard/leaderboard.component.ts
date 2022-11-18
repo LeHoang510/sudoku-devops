@@ -20,6 +20,6 @@ export class LeaderboardComponent implements OnInit {
 
   openDialog(){
     this.dialog.open(DialogComponent,{});
-    console.log(this.gameService.coups); // service not singleton
-  }
+    console.log(this.gameService.coups); 
+}
 }
