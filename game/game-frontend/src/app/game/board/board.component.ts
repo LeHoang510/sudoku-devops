@@ -4,7 +4,6 @@ import { GameService } from 'src/app/service/game.service';
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
-  providers: [GameService]
 })
 export class BoardComponent implements OnInit {
 
@@ -12,6 +11,11 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  increaseCoup(){
+    this.gameService.coups ++;
+    console.log(this.gameService.coups)
   }
 
 }

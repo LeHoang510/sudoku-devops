@@ -21,6 +21,7 @@ import { HistoryComponent } from './game/history/history.component';
 import { LeaderboardComponent } from './game/leaderboard/leaderboard.component';
 import { DialogComponent } from './game/leaderboard/dialog/dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
+import { GameService } from "./service/game.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,10 @@ import { MatDialogModule } from "@angular/material/dialog";
         MatGridListModule,
         MatDialogModule
     ],
-  providers: [interactoTreeUndoProviders(true)],
+  providers: [
+    interactoTreeUndoProviders(true),
+    GameService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

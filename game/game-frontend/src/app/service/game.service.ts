@@ -10,8 +10,10 @@ export class GameService {
 
   private m: Map;
   public game : Game;
+  public coups : number;
   
   constructor(private http: HttpClient) {
+    this.coups = 0;
     this.m = new Map();
     this.game = new Game(this.m);
 

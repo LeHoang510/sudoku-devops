@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from './dialog/dialog.component';
+import { GameService } from 'src/app/service/game.service';
+
 @Component({
   selector: 'app-leaderboard',
   templateUrl: './leaderboard.component.html',
@@ -10,7 +12,7 @@ import {DialogComponent} from './dialog/dialog.component';
 export class LeaderboardComponent implements OnInit {
   name!: string;
 
-  constructor(public dialog : MatDialog) { }
+  constructor(public dialog : MatDialog, public gameService: GameService) { }
 
   ngOnInit(): void {
     this.name = "Foo";
@@ -18,5 +20,6 @@ export class LeaderboardComponent implements OnInit {
 
   openDialog(){
     this.dialog.open(DialogComponent,{});
+    console.log(this.gameService.coups); // service not singleton
   }
 }
