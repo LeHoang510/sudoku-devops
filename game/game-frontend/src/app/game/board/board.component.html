@@ -1,12 +1,12 @@
 <mat-grid-list cols="9" rowHeight="1:1">
-    <mat-grid-tile *ngFor="let x of gameService.game.map.cas">
-      <select (change)="increaseCoup()"  *ngIf="x == 0">
+    <mat-grid-tile *ngFor="let x of a">
+      <select [ngClass]="gameService.game.errors.includes(x) ? 'tile-error' : ''" (change)="increaseCoup()"  *ngIf="gameService.game.map.cas[x] == 0">
         <option> </option>
         <option *ngFor="let y of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
           {{ y }}
         </option>
       </select>
   
-      <div *ngIf="x != 0"  > {{x}} </div>
+      <div *ngIf="gameService.game.map.cas[x] != 0"  > {{gameService.game.map.cas[x]}} </div>
     </mat-grid-tile>
 </mat-grid-list>

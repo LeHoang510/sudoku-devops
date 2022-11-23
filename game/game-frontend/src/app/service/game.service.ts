@@ -17,6 +17,10 @@ export class GameService {
     this.m = new Map();
     this.game = new Game(this.m);
 
+    //test error cases
+    this.game.errors.push(3);
+    this.game.errors.push(2);
+
     this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/inhuman",{'responseType': 'text'}).subscribe({
       next: (x:string) => {for (let i = 0; i < 81; i++){
         this.m.cas[i]=parseInt(x.charAt(i))
