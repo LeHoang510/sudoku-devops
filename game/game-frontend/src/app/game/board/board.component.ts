@@ -7,16 +7,17 @@ import { GameService } from 'src/app/service/game.service';
 })
 export class BoardComponent implements OnInit {
 
-  a = Array.from(Array(81).keys()).map(x => x + 1);
+  a = Array.from(Array(81).keys());
   constructor(public gameService: GameService) {
   }
 
   ngOnInit(): void {
   }
 
-  increaseCoup(){
+  increaseCoup(i :number, value : any){
     this.gameService.coups ++;
     console.log(this.gameService.coups);
+    this.gameService.game.checkCase(i,value.target.value);
   }
 
 }
