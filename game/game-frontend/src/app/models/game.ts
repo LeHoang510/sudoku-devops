@@ -1,73 +1,70 @@
 import { Map } from "./map";
 export class Game {
     public map : Map;
-    public errors =  new Set<number>();
-    
+    public errors : {[id:number]:number[]} =  {};
     public constructor(m: Map){
         this.map = m;
         //this.errors = [];
     }
 
-    //Ajouter des cas ayant la même value par rapport à la col et ligne dans la liste errors 
-    checkCase(index : number, value : number) : void{
-        //Vérifier ligne = phan nguyen col = phan du
-        //this.map.cas[index] = value;
-        var valideCase = true;
-        var index_ligne = Math.floor(index/9); //11 1 
-        var index_col = index % 9; // du 2
-        for(let i = 0; i<9; i++){
-            if (value == this.map.cas[index_ligne*9+i] && index != index_ligne*9+i ){
-                this.errors.add(index);
-                this.errors.add(index_ligne*9+i);
-                console.log("index " + index +  " value " + value.toString());
-                console.log("index " + index +  " value " + this.map.cas[index].toString());
-                console.log("Cas ligne "  + (index_ligne).toString() + " "+ i.toString() + " value " + this.map.cas[index_ligne*9+i].toString());
-                valideCase = false;
-            } 
+    checkCase2(index : number) : boolean {
+        if (index in this.errors){
+            return true;
         }
-        for(let i = 0; i<9; i++){
-            if (value == this.map.cas[i*9+index_col] && index != i*9+index_col){
-                this.errors.add(index);
-                this.errors.add(i*9+index_col);
-                console.log("index " + index +" value " + value.toString());
-                console.log("Cas col " + i.toString() + " " + index_col.toString() + " value " + this.map.cas[i*9+index_col].toString());
-                valideCase = false;
-            } 
+        for (let i in this.errors){
+            if (this.errors[i].includes(index)){
+                return true;
+            }
         }
-        if (valideCase){
-            this.errors.delete(index);
-            for(let i = 0; i<9; i++){
-                if (value != this.map.cas[index_ligne*9+i] && index != index_ligne*9+i){
-                    this.errors.delete(index_ligne*9+i);
-                    console.log("index " + index +  " value " + value.toString());
-                    console.log("Del cas ligne " + (index_ligne*9+i).toString());
-                } 
-            }
-            for(let i = 0; i<9; i++){
-                if (value != this.map.cas[i*9+index_col] && index != i*9+index_col){
-                    this.errors.delete(i*9+index_col);
-                    console.log("index " + index +" value " + this.map.cas[index].toString());
-                    console.log("Del cas col " + (i*9+index_col).toString());
-                } 
-            }
-        } 
-
-        // if (valideCase){
-        //     this.errors.delete(index);
-        // }
+        return false;
     }
 
-    // checkLine(index_ligne : number, index :number){
-    //     var valide = true;
-    //     for(let i = 0; i<9; i++){
-    //         for(let j = i+1; j<9; j++){
-    //             if (this.map.cas[index_ligne*9+i] == this.map.cas[index_ligne*9+j] && index != index_ligne*9+i)
-    //                 valide = false;
-    //             console.log("Check " +(index_ligne*9+i).toString() + " vs " + (index_ligne*9+j).toString());
-    //         }
-    //         if (valide) this.errors.delete(index_ligne*9+i);
-    //         console.log("Del " + (index_ligne*9+i).toString());
-          
-    //     }
-    // }
+    //Ajouter des cas ayant la même value par rapport à la col et ligne dans la liste errors 
+    checkCase(index : number, value : number) : void{
+        //Compare with values in the same row and column
+        var r = Math.floor(index/9);
+        var c = index%9;
+        if (value == 0){
+            if (index in this.errors){
+                delete(this.errors[index]);
+            }
+        }else{
+            for (let i=0;i<9;i++){
+                if((value == this.map.cas[r*9 + i])&&((r*9+i != index))){
+                    if (index in this.errors){
+                        this.errors[index].push(r*9+i);
+                    }else{
+                        this.errors[index] = [r*9+i];
+                    }
+                }else{
+                    if ((index) in this.errors){
+                        if (this.errors[index].includes(r*9+i)){
+                            this.errors[index].splice(this.errors[index].indexOf(r*9+i),1); 
+                        }
+                        if (this.errors[index].length == 0){
+                            delete(this.errors[index]);
+                        } 
+                    }
+                }
+                if((value == this.map.cas[c + i*9])&&((c + i*9 != index))){
+                    if ((index) in this.errors){
+                        this.errors[index].push(c+i*9);
+                    }else{
+                        this.errors[index] = [c+i*9];
+                    }
+                }else{
+                    if ((index) in this.errors){
+                        if (this.errors[index].includes(c+i*9)){
+                            this.errors[index].splice(this.errors[index].indexOf(c+i*9),1);
+
+                        }
+                        if (this.errors[index].length == 0){
+                            delete(this.errors[index]);
+                        }    
+                    }
+                    
+                }
+            }
+        }
+    }
 }

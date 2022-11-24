@@ -15,6 +15,7 @@ export class BoardComponent implements OnInit {
   }
 
   increaseCoup(i :number, value : any){
+    console.log("hello "+i.toString()+ " hi "+value.toString())
     this.gameService.coups ++;
     console.log(this.gameService.coups);
     this.gameService.game.checkCase(i,value.target.value);
