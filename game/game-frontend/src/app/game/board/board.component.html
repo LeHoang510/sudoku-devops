@@ -7,6 +7,10 @@
         </option>
       </select>
   
-      <div *ngIf="gameService.game.map.cas[x] != 0"  > {{gameService.game.map.cas[x]}} </div>
+      <div [ngClass]="gameService.game.errors.has(x) ? 'tile-error' : ''" *ngIf="gameService.game.map.cas[x] != 0" >
+        <p class="center">
+          {{gameService.game.map.cas[x]}} 
+        </p>
+      </div>
     </mat-grid-tile>
 </mat-grid-list>
