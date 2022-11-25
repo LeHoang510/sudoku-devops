@@ -3,6 +3,7 @@ export class Game {
     public map : Map;
     public map2 : Map;
     public errors : {[id:number]:number[]} =  {};
+
     public constructor(m: Map, m2: Map){
         this.map = m;
         this.map2 = m2;
@@ -91,6 +92,9 @@ export class Game {
                 }
             }
         }
-        
+    }
+
+    public setValue(i:number, val : number){
+        this.map.cas[i] = val;
     }
 }
