@@ -5,11 +5,11 @@ export class Game {
     public errors : {[id:number]:number[]} =  {};
 
     public constructor(m: Map, m2: Map){
+
+        // for storing value
         this.map = m;
+        // to check if it is a given case
         this.map2 = m2;
-        // for(let i=0;i<81;i++){
-        //     console.log(this.map2.cas[i].toString());}
-        //this.errors = [];
     }
     //Verifier si cas est dans errors
     checkCase2(index : number) : boolean {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
-import { PartialSelectBinder} from 'interacto';
 import { PartialPointBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
 import { PartialMatSelectBinder } from 'interacto-angular';
+import { MatSelectChange } from '@angular/material/select';
+//import { PartialSelectBinder } from 'interacto';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -19,11 +20,10 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  increaseCoup(i :number, value : any){
-    console.log("hello "+i.toString()+ " hi "+value.toString())
+  increaseCoup(i :number, event: MatSelectChange){
+    console.log("hello "+i.toString()+ " hi "+ event.value)
     this.gameService.coups ++;
-    console.log(this.gameService.coups);
-    this.gameService.game.checkCase(i,value.target.value);
+    this.gameService.game.checkCase(i,event.value);
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
@@ -40,7 +40,7 @@ export class BoardComponent implements OnInit {
   public directSet(binder: PartialPointBinder, index: number) {
 
     binder
-    .toProduce(() => new SetValue(this.gameService.game.map.cas[index], index, this.gameService.currentGame))
+    .toProduce(() => new SetValue(this.gameService.game.map.cas[index], index, this.gameService.game))
     .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size === 1)
     .bind();
 

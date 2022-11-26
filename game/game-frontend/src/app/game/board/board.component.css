@@ -9,35 +9,45 @@ body{
 }
 
 mat-grid-list{
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
 }
 
 mat-grid-tile{
-    border: 1px solid black;
+    border: 3px solid black;
     margin: 0;
     padding: 0;
-    background-color: lightgrey;
 }
-select{
-    width: 100%;
-    height: 100%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-    text-align: center;
-    border: 0;
+
+::ng-deep .mat-select {
     background-color: white;
 }
-.tile-error{
-    background-color: lightpink;
-    width: 100%;
+
+::ng-deep .mat-select .mat-select-trigger{
     height: 100%;
-    margin: 0;
+    text-align: center;
+}   
+
+.tile-select-html {
+    height: var(--size-cell);
+    width: var(--size-cell);
 }
+
+.tile-error{
+    background-color: lightcoral;
+}
+
+.given{
+    background-color: lightgrey;
+}
+
+.full{
+    height: 100%;
+    width: 100%;
+}
+
 .center{
     margin: 0;
     text-align: center;

@@ -1,16 +1,25 @@
 <mat-grid-list cols="9" rowHeight="1:1">
     <mat-grid-tile *ngFor="let x of a">
-      <select (change)="increaseCoup(x,$event)" [ngClass]="gameService.game.checkCase2(x) ? 'tile-error' : ''"   *ngIf="gameService.game.map2.cas[x] == 0">
-        <option> </option>
-        <option *ngFor="let y of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
-          {{ y }}
-        </option>
-      </select>
-  
-      <div [ngClass]="gameService.game.checkCase2(x) ? 'tile-error' : ''" *ngIf="gameService.game.map2.cas[x] == 1" >
+      
+      <!-- the CSS class of matSelect must be define in style.css -->
+      <mat-select disableOptionCentering 
+                  panelClass="select-tile"
+                  class="tile-select-html"
+                  (selectionChange)="increaseCoup(x,$event)"
+                  [ioMatSelect] (matSelectBinder)="setValue($event, x)"
+                  *ngIf="gameService.game.map2.cas[x] == 0" [ngClass]="gameService.game.checkCase2(x) ? 'tile-error full' : 'full'">
+        <mat-option> </mat-option>
+        <mat-option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]" [value]=i>
+          {{ i }}
+        </mat-option>
+      </mat-select>  
+
+      <div  [ngClass]="gameService.game.checkCase2(x) ? 'tile-error full' : 'given full'" 
+            *ngIf="gameService.game.map2.cas[x] == 1" >
         <p class="center">
           {{gameService.game.map.cas[x]}} 
         </p>
       </div>
+
     </mat-grid-tile>
 </mat-grid-list>

@@ -2,9 +2,18 @@
 
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-/* .tile-select-html .mat-select-arrow-wrapper {
+.tile-select-html .mat-select-arrow-wrapper {
   visibility: collapse;
+  width: 0;
 }
-*/
 
+.cdk-overlay-container .cdk-overlay-pane .select-tile {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
+.mat-option-text{
+  text-align: center;
+}
