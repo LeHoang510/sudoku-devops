@@ -13,29 +13,29 @@ export class SetValue extends UndoableCommand{
         this.value = val;
         this.index = i;
         this.game = g;
-        this.oldValue = g.map.cas[this.index];
+        this.oldValue = 0
     }
 
-    // protected override createMemento() {
-    //     this.oldValue     
-    //     ...
-    // }
+    protected override createMemento() {
+        this.oldValue = this.game.map.cas[this.index];
+    }
 
     public override canExecute(): boolean {
         return this.game.map.cas[this.index] !== this.value;
     }
 
     protected execution(): void {
-        if (this.canExecute()){
-            this.game.setValue(this.index,this.value);
-        }
+        console.log("command execution works")
+        this.game.setValue(this.index,this.value);
     }
 
     public redo(): void {
+        console.log("command redo works")
         this.game.setValue(this.index,this.value);
     }
 
     public undo(): void {
+        console.log("command undo works")
         this.game.setValue(this.index,this.oldValue);
     }
     

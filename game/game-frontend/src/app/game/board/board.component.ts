@@ -1,35 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
 import { PartialPointBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
 import { PartialMatSelectBinder } from 'interacto-angular';
-import { MatSelectChange } from '@angular/material/select';
-//import { PartialSelectBinder } from 'interacto';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
+  providers: []
 })
 export class BoardComponent implements OnInit {
 
   a = Array.from(Array(81).keys());
+  public widthHistory: string = '20%';
 
-  constructor(public gameService: GameService) {
-  }
+  public constructor (public gameService: GameService) {}
 
   ngOnInit(): void {
   }
 
-  increaseCoup(i :number, event: MatSelectChange){
-    console.log("hello "+i.toString()+ " hi "+ event.value)
+  increaseCoup(){
     this.gameService.coups ++;
-    this.gameService.game.checkCase(i,event.value);
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
   // for producing an undoable command SetValue
   public setValue(binder: PartialMatSelectBinder, index: number) {
-
+    
     binder.toProduce(i => new SetValue(parseInt(i.change?.value), index, this.gameService.game))
     .bind();
 

@@ -17,17 +17,16 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RouterModule} from "@angular/router";
 import {InteractoModule, interactoTreeUndoProviders} from "interacto-angular";
 import { BoardComponent } from './game/board/board.component';
-import { HistoryComponent } from './game/history/history.component';
 import { LeaderboardComponent } from './game/leaderboard/leaderboard.component';
 import { DialogComponent } from './game/leaderboard/dialog/dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { GameService } from "./service/game.service";
+import { AngularSplitModule } from "angular-split";
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
-    HistoryComponent,
     LeaderboardComponent,
     DialogComponent
   ],
@@ -48,7 +47,8 @@ import { GameService } from "./service/game.service";
         MatCheckboxModule,
         RouterModule,
         MatGridListModule,
-        MatDialogModule
+        MatDialogModule,
+        AngularSplitModule
     ],
   providers: [
     interactoTreeUndoProviders(true),

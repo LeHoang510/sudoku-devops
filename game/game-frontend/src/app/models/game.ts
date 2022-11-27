@@ -39,7 +39,7 @@ export class Game {
                 } 
             }
         }
-        this.map.cas[index] = value;
+        this.map.cas[index]=value
         var r = Math.floor(index/9);
         var c = index%9;
         //Si value égal à 0, supprimer clé index dans errors s'il existe
@@ -95,6 +95,7 @@ export class Game {
     }
 
     public setValue(i:number, val : number){
-        this.map.cas[i] = val;
+        console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
+        this.checkCase(i,val)
     }
 }
