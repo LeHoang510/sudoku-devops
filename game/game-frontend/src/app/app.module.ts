@@ -22,13 +22,15 @@ import { DialogComponent } from './game/leaderboard/dialog/dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { GameService } from "./service/game.service";
 import { AngularSplitModule } from "angular-split";
+import { GameComponent } from './game/game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     LeaderboardComponent,
-    DialogComponent
+    DialogComponent,
+    GameComponent
   ],
     imports: [
         BrowserModule,
