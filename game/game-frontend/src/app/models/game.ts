@@ -29,7 +29,9 @@ export class Game {
     }
 
     //Ajouter des cas ayant la même value par rapport à la col et ligne dans la liste errors 
-    checkCase(index : number, value : number) : void{
+    checkCase(index : number, value : number) : boolean{
+
+        var res : boolean = true;
         //si on change un cas à un valeur différent, supprimer ce cas dans toutes ces relations 
         if (value != this.map.cas[index]){
             for (let i in this.errors){
@@ -94,6 +96,8 @@ export class Game {
                 }
             }
         }
+
+        return res;
     }
 
     public setValue(i:number, val : number){
@@ -176,6 +180,11 @@ export class Game {
             })
             console.log("for case " + i + " val : " + this.map.cas[i] + ", Rec tiles : " + res)
         }
+    }
+
+    public checkEnd() : boolean{
+        var res : boolean = true
+        return res
     }
 
 }

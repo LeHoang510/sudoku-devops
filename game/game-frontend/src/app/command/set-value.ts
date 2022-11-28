@@ -52,9 +52,30 @@ export class SetValue extends UndoableCommand{
         canvas.height = 1000;
         ctx.font = '100px Bodo';
         ctx.fillStyle = 'black';
+        // paint case
         for (let i = 0; i < game.map.cas.length; i++){
-        ctx.fillText(game.map.cas[i]?.toString() ?? ""
-        , (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            if(i==indexChanged){
+                if(game.checkCase2(i)){
+                    ctx.fillStyle = 'red';
+                    ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                }
+                ctx.fillStyle = 'green';
+                ctx.fillText(game.map.cas[i].toString(), 
+                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                ctx.fillStyle = 'black';
+            } else if(game.map.cas[i]==0){
+                ctx.fillText("", 
+                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            } else if(game.checkCase2(i)){
+                ctx.fillStyle = 'red';
+                ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                ctx.fillStyle = 'black';
+                ctx.fillText(game.map.cas[i].toString(), 
+                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            } else {
+                ctx.fillText(game.map.cas[i].toString(), 
+                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            }
         }
         for(let i = 1; i < 9; i++) {
         ctx.moveTo(i * tileSize, 0);
