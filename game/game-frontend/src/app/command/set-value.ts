@@ -54,7 +54,10 @@ export class SetValue extends UndoableCommand{
         ctx.fillStyle = 'black';
         // paint case
         for (let i = 0; i < game.map.cas.length; i++){
-            if(i==indexChanged){
+            if(game.map.cas[i]==0){
+                ctx.fillText("", 
+                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            } else if(i==indexChanged){
                 if(game.checkCase2(i)){
                     ctx.fillStyle = 'red';
                     ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
@@ -63,9 +66,6 @@ export class SetValue extends UndoableCommand{
                 ctx.fillText(game.map.cas[i].toString(), 
                             (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
                 ctx.fillStyle = 'black';
-            } else if(game.map.cas[i]==0){
-                ctx.fillText("", 
-                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
             } else if(game.checkCase2(i)){
                 ctx.fillStyle = 'red';
                 ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
