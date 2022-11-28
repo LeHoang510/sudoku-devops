@@ -23,17 +23,37 @@ export class GameService {
     // this.game.errors.push(3);
     // this.game.errors.push(2);
 
-    this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'}).subscribe({
-      next: (x:string) => {for (let i = 0; i < 81; i++){
-        this.m.cas[i]=parseInt(x.charAt(i));
-        if (this.m.cas[i] == 0){
-          this.m2.cas[i] = 0;
-        }else{
-          this.m2.cas[i] = 1;
-        }
-      }} 
-    });
+    // this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'})
+    // .subscribe({
+    //   next: (x:string) => {for (let i = 0; i < 81; i++){
+    //     this.m.cas[i]=parseInt(x.charAt(i));
+    //     if (this.m.cas[i] == 0){
+    //       this.m2.cas[i] = 0;
+    //     }else{
+    //       this.m2.cas[i] = 1;
+    //     }
+    //   }}
+    // });
+
+    this.initGame()
     
+    
+    this.game.player = 'Foo'
   }
   
+  // Try promise and async
+  async initGame(){
+    const res = await this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'}).toPromise()
+    const data = res!
+    for (let i = 0; i < 81; i++){
+      this.m.cas[i]=parseInt(data.charAt(i));
+
+      if (this.m.cas[i] == 0){
+        this.m2.cas[i] = 0;
+      }else{
+        this.m2.cas[i] = 1;
+      }
+    }
+    this.game.updateHelpTiles()
+  }
 }

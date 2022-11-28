@@ -10,16 +10,18 @@ import { GameService } from 'src/app/service/game.service';
 })
 
 export class LeaderboardComponent implements OnInit {
-  name!: string;
 
   constructor(public dialog : MatDialog, public gameService: GameService) { }
 
   ngOnInit(): void {
-    this.name = "Foo";
+  }
+
+  test(){
+    console.log(this.gameService.game.player)
   }
 
   openDialog(){
     this.dialog.open(DialogComponent,{});
     console.log(this.gameService.coups); 
-}
+  }
 }

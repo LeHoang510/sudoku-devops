@@ -5,7 +5,9 @@
     
 <mat-form-field appearance="fill">
     <mat-label>Joueur</mat-label>
-    <input matInput [(ngModel)]="name">
+    <input matInput 
+           (change)="test()"
+           [(ngModel)]="gameService.game.player">
 </mat-form-field>
 
 <p>Coups: {{gameService.coups}}</p>

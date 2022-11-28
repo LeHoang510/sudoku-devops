@@ -24,11 +24,22 @@ export class BoardComponent implements OnInit,AfterViewInit {
   public constructor (public gameService: GameService) {}
 
   ngOnInit(): void {
-  
+    
   }
 
   public ngAfterViewInit(): void {
+    // this thing out an error in the console
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
+  }
+
+  //for testing
+  test(val : number, index : number){
+    // test swaping dim functions 
+    console.log(this.gameService.game.getX(index))
+    console.log(this.gameService.game.getY(index))
+    console.log(...this.gameService.game.getSq(index))
+    console.log(...this.gameService.game.getCol(index))
+    console.log(...this.gameService.game.getLig(index))
   }
 
   increaseCoup(){
@@ -56,7 +67,11 @@ export class BoardComponent implements OnInit,AfterViewInit {
   }
 
   public printRecSet(index : number) : string{
-    return [...this.gameService.game.map.helpTiles[index]].join('')
+    let res :string = ''
+    this.gameService.game.map.helpTiles[index].forEach(function(i){
+      res = res+i.toString()
+    })
+    return res
   }
 
 }

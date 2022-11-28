@@ -1,5 +1,7 @@
 import { Map } from "./map";
 export class Game {
+
+    public player : string
     public map : Map;
     public map2 : Map;
     public errors : {[id:number]:number[]} =  {};
@@ -97,6 +99,7 @@ export class Game {
     public setValue(i:number, val : number){
         console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
         this.checkCase(i,val)
+        this.updateHelpTiles()
     }
 
 
@@ -135,13 +138,44 @@ export class Game {
     // get the whole square
     public getSq(index : number) : number[]{
         var res:number[] = []
-        var xOffset = Math.floor(this.getX(index)/3)
-        var yOffset = Math.floor(this.getY(index)/3)
-        for (var i = xOffset; i< xOffset+3; i++){
-            for (var j = yOffset; j<yOffset+3; j++){
-                res.push(this.twoDtoOneD(i,j))
+        var xOffset = Math.floor(this.getX(index) / 3)
+        // console.log(xOffset)
+        var yOffset = Math.floor(this.getY(index) / 3)
+        // console.log(yOffset)
+        for (var i = 0; i<3; i++){
+            for (var j = 0; j<3; j++){
+                res.push(this.twoDtoOneD(xOffset*3+i,yOffset*3+j))
             }
         }
         return res
     }
+    
+    // update help tiles of every case
+    public updateHelpTiles(){
+        for (let i = 0; i < 81; i++){
+            if (this.map.cas[i] == 0){
+                
+                for (var j = 1; j <= 9; j++){
+                    this.map.helpTiles[i].add(j)
+                }
+
+                for(var a = 0; a < 9; a++){
+                    this.map.helpTiles[i].delete(this.map.cas[this.getCol(i)[a]])
+                    this.map.helpTiles[i].delete(this.map.cas[this.getLig(i)[a]])
+                    this.map.helpTiles[i].delete(this.map.cas[this.getSq(i)[a]])
+                }
+
+            } else {
+                this.map.helpTiles[i].clear()
+            }
+
+            // for debug purpose
+            let res :string = ''
+            this.map.helpTiles[i].forEach(function(i){
+                res = res+i.toString()
+            })
+            console.log("for case " + i + " val : " + this.map.cas[i] + ", Rec tiles : " + res)
+        }
+    }
+
 }
