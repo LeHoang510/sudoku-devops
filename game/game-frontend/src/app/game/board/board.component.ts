@@ -1,22 +1,34 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
 import { PartialPointBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
-import { PartialMatSelectBinder } from 'interacto-angular';
+import { PartialMatSelectBinder, TreeHistoryComponent } from 'interacto-angular';
+// import { MatGridList } from '@angular/material/grid-list';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
   providers: []
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit,AfterViewInit {
+
+  @ViewChild('treeComp')
+  private treeComp: TreeHistoryComponent;
+  @ViewChild('h')
+  private h: ElementRef<HTMLElement>;
+
+  histWidth : string
 
   a = Array.from(Array(81).keys());
-  public widthHistory: string = '20%';
 
   public constructor (public gameService: GameService) {}
 
   ngOnInit(): void {
+  
+  }
+
+  public ngAfterViewInit(): void {
+    this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
   increaseCoup(){
