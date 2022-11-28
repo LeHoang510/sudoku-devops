@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
+  title = 'Sudoku';
+
   constructor() { }
 
   ngOnInit(): void {
