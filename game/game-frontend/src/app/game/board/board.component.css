@@ -30,6 +30,18 @@ mat-grid-tile{
     text-align: center;
 }   
 
+.end-board{
+    position: absolute; 
+    width: 500px; 
+    height: 250px; 
+    background-color: gray; 
+    z-index: 10; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 .tile-select-html {
     height: var(--size-cell);
     width: var(--size-cell);

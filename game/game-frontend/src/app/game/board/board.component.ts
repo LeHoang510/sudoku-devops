@@ -22,6 +22,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
+  end : boolean = false
   histWidth : string
 
   a = Array.from(Array(81).keys());
