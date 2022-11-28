@@ -22,7 +22,7 @@
                     [value]="this.gameService.game.map.cas[x]"
                     [ngClass]="gameService.game.checkCase2(x) ? 'tile-error full' : 'full'"
                     *ngIf="gameService.game.map2.cas[x] == 0">
-          <mat-option> </mat-option>
+          <mat-option [value]="0"> </mat-option>
           <mat-option *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]" [value]=i>
             {{ i }}
           </mat-option>
