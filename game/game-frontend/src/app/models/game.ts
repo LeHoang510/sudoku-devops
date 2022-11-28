@@ -174,11 +174,12 @@ export class Game {
             }
 
             // for debug purpose
-            let res :string = ''
-            this.map.helpTiles[i].forEach(function(i){
-                res = res+i.toString()
-            })
-            console.log("for case " + i + " val : " + this.map.cas[i] + ", Rec tiles : " + res)
+
+            // let res :string = ''
+            // this.map.helpTiles[i].forEach(function(i){
+            //     res = res+i.toString()
+            // })
+            // console.log("for case " + i + " val : " + this.map.cas[i] + ", Rec tiles : " + res)
         }
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
 import { PartialPointBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
@@ -16,6 +16,11 @@ export class BoardComponent implements OnInit,AfterViewInit {
   private treeComp: TreeHistoryComponent;
   @ViewChild('h')
   private h: ElementRef<HTMLElement>;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.histWidth = `${this.h.nativeElement.clientWidth}px`
+  }
 
   histWidth : string
 
@@ -42,8 +47,10 @@ export class BoardComponent implements OnInit,AfterViewInit {
     console.log(...this.gameService.game.getLig(index))
   }
 
-  increaseCoup(){
-    this.gameService.coups ++;
+  increaseCoup(val: number){
+    if (val != 0){
+      this.gameService.coups ++;
+    }
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
