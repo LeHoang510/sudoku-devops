@@ -92,7 +92,27 @@ export class Game {
                             delete(this.errors[index]);
                         }    
                     }
-                    
+                }
+
+                //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
+                if((value == this.map.cas[this.getSq(index)[i]])&&((this.map.cas[this.getSq(index)[i]] != index))){
+                    if ((index) in this.errors){
+                        this.errors[index].push(this.getSq(index)[i]);
+                    }else{
+                        this.errors[index] = [this.getSq(index)[i]];
+                    }
+                }else{
+                //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+                    if ((index) in this.errors){
+                        if (this.errors[index].includes(this.getSq(index)[i])){
+                            this.errors[index].splice(this.errors[index].indexOf(this.getSq(index)[i]),1);
+
+                        }
+                        //Si la liste errors[index] est vide, supprimer la clé
+                        if (this.errors[index].length == 0){
+                            delete(this.errors[index]);
+                        }    
+                    }
                 }
             }
         }
@@ -100,7 +120,7 @@ export class Game {
         return res;
     }
 
-    public setValue(i:number, val : number){
+    public setValue(i:number, val : number){ // check case + check end game
         console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
         this.checkCase(i,val)
         this.updateHelpTiles()
@@ -184,8 +204,12 @@ export class Game {
     }
 
     public checkEnd() : boolean{
-        var res : boolean = true
-        return res
+        for (let c of this.map.cas){
+            if (c == 0){
+                return false
+            }
+        }
+        return Object.keys(this.errors).length === 0;
     }
 
 }
