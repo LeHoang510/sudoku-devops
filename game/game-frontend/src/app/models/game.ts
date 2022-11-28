@@ -5,12 +5,12 @@ export class Game {
     public errors : {[id:number]:number[]} =  {};
 
     public constructor(m: Map, m2: Map){
-
         // for storing value
         this.map = m;
         // to check if it is a given case
         this.map2 = m2;
     }
+
     //Verifier si cas est dans errors
     checkCase2(index : number) : boolean {
         //Verifier si cas est dans clé
@@ -97,5 +97,51 @@ export class Game {
     public setValue(i:number, val : number){
         console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
         this.checkCase(i,val)
+    }
+
+
+    public getX(index : number) : number {
+        return index % 9
+    }
+
+    public getY(index : number) : number {
+        return Math.floor(index/9)
+    }
+
+    public twoDtoOneD (x : number, y: number) : number{
+        return y*9 + x;
+    }
+
+    // get the whole column
+    public getCol(index : number) : number[]{
+        var res:number[] = []
+        var x = this.getX(index)
+        for (var i = 0; i<9; i++){
+            res.push(this.twoDtoOneD(x,i))
+        }
+        return res
+    }
+
+    // get the whole row
+    public getLig(index : number) : number[]{
+        var res:number[] = []
+        var y = this.getY(index)
+        for (var i = 0; i<9; i++){
+            res.push(this.twoDtoOneD(i,y))
+        }
+        return res
+    }
+
+    // get the whole square
+    public getSq(index : number) : number[]{
+        var res:number[] = []
+        var xOffset = Math.floor(this.getX(index)/3)
+        var yOffset = Math.floor(this.getY(index)/3)
+        for (var i = xOffset; i< xOffset+3; i++){
+            for (var j = yOffset; j<yOffset+3; j++){
+                res.push(this.twoDtoOneD(i,j))
+            }
+        }
+        return res
     }
 }

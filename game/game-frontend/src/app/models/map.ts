@@ -6,7 +6,11 @@ export class Map {
         this.cas = new Array(81);
         this.helpTiles = [];
         for (var i = 0; i < 81; i++) {
-            this.helpTiles.push(new Set<number>());
+            var tmp = new Set<number>;
+            for (var j = 1; i <= 9; j++){
+                tmp.add(i)
+            }
+            this.helpTiles.push(tmp);
         }
     }
     

@@ -55,4 +55,8 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   }
 
+  public printRecSet(index : number) : string{
+    return [...this.gameService.game.map.helpTiles[index]].join('')
+  }
+
 }

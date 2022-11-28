@@ -7,7 +7,9 @@
   <div style="float:right; width: 50% ; max-height: fit-content;">
     <mat-grid-list cols="9" rowHeight="1:1">
       <mat-grid-tile *ngFor="let x of a">
-
+        <p>
+          {{printRecSet(x)}}
+        </p>
         <mat-select disableOptionCentering 
                     panelClass="select-tile"
                     class="tile-select-html"
