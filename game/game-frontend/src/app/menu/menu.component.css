@@ -25,6 +25,7 @@
   float: right;
   text-align: center;
   background-color: transparent;
+  height: 90px;
 }
 
 .buttonGenerateMap{
@@ -37,7 +38,7 @@
     width: 40%;
 }
 
-.buttonGenerateMap:hover {
+.buttonGenerateMap:hover, .box-map .mat-form-field:hover{
   transform: translate(1px, 1px);
   box-shadow: lightgray 0 0 5px;
   background-color: lightgrey;
