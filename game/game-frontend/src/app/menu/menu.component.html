@@ -11,8 +11,21 @@
   
 <p class="suggestion">Select a map to play or replay with: </p>
 
+<div class="box-map">
+    <mat-form-field appearance="fill">
+        <mat-select [(value)]="selected">
+          <mat-option value = {{enum.value}} *ngFor="let enum of level | keyvalue">
+            {{enum.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>   
+      <button class="buttonGenerateMap" (click)="navigationBoard()" >Generate random board</button>
+</div>
+
+<p class="consigne">Click on a Sudoku board to launch the game with.</p>
+
 <div class="suggestion" [formGroup]="suggestion">
 <h4>You chose:</h4>
 {{suggestion.value | json}}
 </div>
-
+<p>You selected: {{selected}}</p>

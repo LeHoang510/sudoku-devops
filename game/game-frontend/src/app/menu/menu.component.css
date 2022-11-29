@@ -11,3 +11,40 @@
 .suggestion{
   margin-left: 25%;
 }
+
+.box-map{
+  display: block;
+  margin-left: 25%;
+  width: 35%;
+  height: 500px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.box-map .mat-form-field{
+  float: right;
+  text-align: center;
+  background-color: transparent;
+}
+
+.buttonGenerateMap{
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 20px 10px;
+    border: none;
+    
+    font-weight: 500; 
+    width: 40%;
+}
+
+.buttonGenerateMap:hover {
+  transform: translate(1px, 1px);
+  box-shadow: lightgray 0 0 5px;
+  background-color: lightgrey;
+  border-radius: 20px;
+}
+
+.consigne{
+  color: gray;
+  margin-left: 25%;
+}
