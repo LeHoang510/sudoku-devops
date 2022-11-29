@@ -152,6 +152,13 @@ export class Game {
             }
         }
 
+        // for debug purpose
+        if(!res){
+            console.log("fault bloc")
+        } else {
+            console.log("bonne bloc")
+        }
+
         return res
     }
 
@@ -181,6 +188,13 @@ export class Game {
                     }    
                 }
             }
+        }
+
+        // for debug purpose
+        if(!res){
+            console.log("fault col")
+        } else {
+            console.log("bonne col")
         }
 
         return res
@@ -213,6 +227,14 @@ export class Game {
                 }
             }
         }
+
+        // for debug purpose
+        if(!res){
+            console.log("fault ligne")
+        } else {
+            console.log("bonne ligne")
+        }
+
         return res
     }
 
