@@ -1,9 +1,9 @@
 package game.model;
 
 public class Map {
-    private int id;
-    private String map;
-    private String level;
+    public int id;
+    public String map;
+    public String level;
 
     public Map(int id, String map, String level){
         this.id = id;

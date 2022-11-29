@@ -4,10 +4,7 @@ import game.model.Game;
 import game.model.Map;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -40,11 +37,19 @@ public class GameService { // why this shit live in game-backend folder
     }
 
     public Map getMap(String level){
-
         return null;
     }
 
     public static void saveMap(Map m){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("map/"+m.level,true));
+            writer.append(m.id + " " + m.level + " " + m.map + "\n");
+            writer.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
 
     }
 
