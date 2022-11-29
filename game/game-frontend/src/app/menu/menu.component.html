@@ -1,6 +1,18 @@
 <mat-form-field appearance="fill">
-    <mat-label>Joueur</mat-label>
+    <mat-label>Player name</mat-label>
     <input matInput 
            (change)="test()"
            [(ngModel)]="gameService.game.player">
 </mat-form-field>
+
+<div class="suggestion" [formGroup]="suggestion">
+    <p><mat-checkbox formControlName="suggested">With suggestions (prevent recording the score)</mat-checkbox></p>
+</div>
+  
+<p class="suggestion">Select a map to play or replay with: </p>
+
+<div class="suggestion" [formGroup]="suggestion">
+<h4>You chose:</h4>
+{{suggestion.value | json}}
+</div>
+

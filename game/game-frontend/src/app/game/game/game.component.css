@@ -1,35 +1,30 @@
-@font-face {
-    font-family: Bodo;
-    src: url("../../../assets/BodoAmat.ttf");
-  }
-  
-  * {
-    font-family: Bodo;
-    font-size: 30px;
-    box-sizing: border-box;
-  }
-  
-  .column {
-    float: left;
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
-  }
-  .history-container {
-    width: 40%;
-  }
-  
-  .leaderboard-container {
-    width: 20%;
-  }
-  
-  .board-container {
-    /* width: 40%; */
-    width: 80%;
-  }
-  
-  /* Clear floats after the columns */
-  .container:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+* {
+  font-family: Bodo;
+  font-size: 30px;
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.history-container {
+  width: 40%;
+}
+
+.leaderboard-container {
+  width: 20%;
+}
+
+.board-container {
+  /* width: 40%; */
+  width: 80%;
+}
+
+/* Clear floats after the columns */
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}

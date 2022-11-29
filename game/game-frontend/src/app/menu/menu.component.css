@@ -2,4 +2,12 @@
     font-family: Bodo;
     font-size: 20px;
     box-sizing: border-box;
-  }
+}
+
+.mat-form-field{
+  margin-left: 25%;
+}
+
+.suggestion{
+  margin-left: 25%;
+}

@@ -6,12 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-
-  title = 'Sudoku';
-
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

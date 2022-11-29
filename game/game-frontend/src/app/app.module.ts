@@ -12,7 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import {MatGridListModule} from "@angular/material/grid-list"
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {RouterModule} from "@angular/router";
 import {InteractoModule, interactoTreeUndoProviders} from "interacto-angular";
@@ -25,7 +25,7 @@ import { AngularSplitModule } from "angular-split";
 import { GameComponent } from './game/game/game.component';
 import { MenuComponent } from "./menu/menu.component";
 import { HeaderComponent } from './header/header.component';
-
+import { FormBuilder } from "@angular/forms";
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +55,7 @@ import { HeaderComponent } from './header/header.component';
         MatGridListModule,
         MatDialogModule,
         AngularSplitModule,
+        ReactiveFormsModule
         
     ],
   providers: [

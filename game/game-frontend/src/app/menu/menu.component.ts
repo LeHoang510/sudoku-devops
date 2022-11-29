@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../service/game.service';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +8,10 @@ import { GameService } from '../service/game.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
-  constructor(public gameService : GameService ) { }
+  suggestion = this._formBuilder.group({
+    suggested: false,
+  });
+  constructor(public gameService : GameService, private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
   }
