@@ -1,1 +1,6 @@
-<p>menu works!</p>
+<mat-form-field appearance="fill">
+    <mat-label>Joueur</mat-label>
+    <input matInput 
+           (change)="test()"
+           [(ngModel)]="gameService.game.player">
+</mat-form-field>

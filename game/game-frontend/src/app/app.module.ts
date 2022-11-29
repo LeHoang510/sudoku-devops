@@ -23,6 +23,8 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { GameService } from "./service/game.service";
 import { AngularSplitModule } from "angular-split";
 import { GameComponent } from './game/game/game.component';
+import { MenuComponent } from "./menu/menu.component";
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { GameComponent } from './game/game/game.component';
     BoardComponent,
     LeaderboardComponent,
     DialogComponent,
-    GameComponent
+    GameComponent,
+    MenuComponent,
+    HeaderComponent
   ],
     imports: [
         BrowserModule,
@@ -50,7 +54,8 @@ import { GameComponent } from './game/game/game.component';
         RouterModule,
         MatGridListModule,
         MatDialogModule,
-        AngularSplitModule
+        AngularSplitModule,
+        
     ],
   providers: [
     interactoTreeUndoProviders(true),
