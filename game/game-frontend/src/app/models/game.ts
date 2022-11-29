@@ -31,7 +31,6 @@ export class Game {
     //Ajouter des cas ayant la même value par rapport à la col et ligne dans la liste errors 
     checkCase(index : number, value : number) : boolean{
 
-        var res : boolean = true;
         //si on change un cas à un valeur différent, supprimer ce cas dans toutes ces relations 
         if (value != this.map.cas[index]){
             for (let i in this.errors){
@@ -43,90 +42,186 @@ export class Game {
                 } 
             }
         }
-        this.map.cas[index]=value
-        var r = Math.floor(index/9);
-        var c = index%9;
+
         //Si value égal à 0, supprimer clé index dans errors s'il existe
         if (value == 0){
             if (index in this.errors){
                 delete(this.errors[index]);
             }
+            return Object.keys(this.errors).length === 0;
         }else{
-        //Sinon, comparer le avec les cas en même ligne, même colonne
-            for (let i=0;i<9;i++){
-                //Comparer avec les cas en même ligne, si égal, créer or ajouter dans errors[index]
-                if((value == this.map.cas[r*9 + i])&&((r*9+i != index))){
-                    if (index in this.errors){
-                        this.errors[index].push(r*9+i);
-                    }else{
-                        this.errors[index] = [r*9+i];
-                    }
+            // Sinon, comparer le avec les cas en même ligne, même colonne
+            // var r = this.getY(index)
+            // var c = this.getX(index)
+            // for (let i=0;i<9;i++){
+            //     //Comparer avec les cas en même ligne, si égal, créer or ajouter dans errors[index]
+            //     if((value == this.map.cas[r*9 + i])&&((r*9+i != index))){
+            //         if (index in this.errors){
+            //             this.errors[index].push(r*9+i);
+            //         }else{
+            //             this.errors[index] = [r*9+i];
+            //         }
+            //     }else{
+            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+            //         if ((index) in this.errors){
+            //             if (this.errors[index].includes(r*9+i)){
+            //                 this.errors[index].splice(this.errors[index].indexOf(r*9+i),1); 
+            //             }
+            //             //Si la liste errors[index] est vide, supprimer la clé
+            //             if (this.errors[index].length == 0){
+            //                 delete(this.errors[index]);
+            //             } 
+            //         }
+            //     }
+            //     //Comparer avec les cas en même colone, si égal, créer or ajouter dans errors[index]
+            //     if((value == this.map.cas[c + i*9])&&((c + i*9 != index))){
+            //         if ((index) in this.errors){
+            //             this.errors[index].push(c+i*9);
+            //         }else{
+            //             this.errors[index] = [c+i*9];
+            //         }
+            //     }else{
+            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+            //         if ((index) in this.errors){
+            //             if (this.errors[index].includes(c+i*9)){
+            //                 this.errors[index].splice(this.errors[index].indexOf(c+i*9),1);
+
+            //             }
+            //             //Si la liste errors[index] est vide, supprimer la clé
+            //             if (this.errors[index].length == 0){
+            //                 delete(this.errors[index]);
+            //             }    
+            //         }
+            //     }
+
+            //     //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
+            //     var tmp = this.getSq(index)
+            //     if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
+            //         if ((index) in this.errors){
+            //             this.errors[index].push(tmp[i]);
+            //         }else{
+            //             this.errors[index] = [tmp[i]];
+            //         }
+            //     }else{
+            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+            //         if ((index) in this.errors){
+            //             if (this.errors[index].includes(tmp[i])){
+            //                 this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
+
+            //             }
+            //             //Si la liste errors[index] est vide, supprimer la clé
+            //             if (this.errors[index].length == 0){
+            //                 delete(this.errors[index]);
+            //             }    
+            //         }
+            //     }
+            // }
+
+            var res1 = this.checkBloc(index,value)
+            var res2 = this.checkCol(index,value) 
+            var res3 = this.checkLig(index,value)
+            return res1 && res2 && res3
+        }
+    }
+
+    checkBloc(index : number, value : number) : boolean{
+        var res = true // true = no error ; false = error
+        var tmp = this.getSq(index)
+        
+        //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
+        for (let i=0;i<9;i++){
+            if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
+                res = false
+                if ((index) in this.errors){
+                    this.errors[index].push(tmp[i]);
                 }else{
-                //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-                    if ((index) in this.errors){
-                        if (this.errors[index].includes(r*9+i)){
-                            this.errors[index].splice(this.errors[index].indexOf(r*9+i),1); 
-                        }
-                        //Si la liste errors[index] est vide, supprimer la clé
-                        if (this.errors[index].length == 0){
-                            delete(this.errors[index]);
-                        } 
-                    }
+                    this.errors[index] = [tmp[i]];
                 }
-                //Comparer avec les cas en même colone, si égal, créer or ajouter dans errors[index]
-                if((value == this.map.cas[c + i*9])&&((c + i*9 != index))){
-                    if ((index) in this.errors){
-                        this.errors[index].push(c+i*9);
-                    }else{
-                        this.errors[index] = [c+i*9];
+            }else{
+            //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+                if ((index) in this.errors){
+                    if (this.errors[index].includes(tmp[i])){
+                        this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
+    
                     }
-                }else{
-                //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-                    if ((index) in this.errors){
-                        if (this.errors[index].includes(c+i*9)){
-                            this.errors[index].splice(this.errors[index].indexOf(c+i*9),1);
-
-                        }
-                        //Si la liste errors[index] est vide, supprimer la clé
-                        if (this.errors[index].length == 0){
-                            delete(this.errors[index]);
-                        }    
-                    }
-                }
-
-                //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
-                var tmp = this.getSq(index)
-                if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
-                    if ((index) in this.errors){
-                        this.errors[index].push(tmp[i]);
-                    }else{
-                        this.errors[index] = [tmp[i]];
-                    }
-                }else{
-                //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-                    if ((index) in this.errors){
-                        if (this.errors[index].includes(tmp[i])){
-                            this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
-
-                        }
-                        //Si la liste errors[index] est vide, supprimer la clé
-                        if (this.errors[index].length == 0){
-                            delete(this.errors[index]);
-                        }    
-                    }
+                    //Si la liste errors[index] est vide, supprimer la clé
+                    if (this.errors[index].length == 0){
+                        delete(this.errors[index]);
+                    }    
                 }
             }
         }
 
-        return res;
+        return res
+    }
+
+    checkCol(index : number, value : number) : boolean{
+        var res = true // true = no error ; false = error
+        var tmp = this.getCol(index)
+
+        //Comparer avec les cas en même col, si égal, créer or ajouter dans errors[index]
+        for (let i=0;i<9;i++){
+            if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
+                res = false
+                if ((index) in this.errors){
+                    this.errors[index].push(tmp[i]);
+                }else{
+                    this.errors[index] = [tmp[i]];
+                }
+            }else{
+            //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+                if ((index) in this.errors){
+                    if (this.errors[index].includes(tmp[i])){
+                        this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
+    
+                    }
+                    //Si la liste errors[index] est vide, supprimer la clé
+                    if (this.errors[index].length == 0){
+                        delete(this.errors[index]);
+                    }    
+                }
+            }
+        }
+
+        return res
+    }
+
+    checkLig(index : number, value : number) : boolean{
+        var res = true // true = no error ; false = error
+        var tmp = this.getLig(index)
+        
+        //Comparer avec les cas en même ligne, si égal, créer or ajouter dans errors[index]
+        for (let i=0;i<9;i++){
+            if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
+                res = false
+                if ((index) in this.errors){
+                    this.errors[index].push(tmp[i]);
+                }else{
+                    this.errors[index] = [tmp[i]];
+                }
+            }else{
+            //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
+                if ((index) in this.errors){
+                    if (this.errors[index].includes(tmp[i])){
+                        this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
+    
+                    }
+                    //Si la liste errors[index] est vide, supprimer la clé
+                    if (this.errors[index].length == 0){
+                        delete(this.errors[index]);
+                    }    
+                }
+            }
+        }
+        return res
     }
 
     public setValue(i:number, val : number){ // check case + check end game
         console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
         this.checkCase(i,val)
+        this.map.cas[i]=val
         this.updateHelpTiles()
     }
-
 
     public getX(index : number) : number {
         return index % 9

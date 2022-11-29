@@ -82,4 +82,8 @@ export class BoardComponent implements OnInit,AfterViewInit {
     return res
   }
 
+  public returnToMenu() : void {
+    console.log("returned to menu")
+  }
+
 }
