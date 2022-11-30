@@ -9,8 +9,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -69,24 +71,59 @@ public class GameService { // why this shit live in game-backend folder
 
     // TODO:
     // constraint of safe game : Only one score (the best one) for one player on a given grid.
-    public boolean saveGame(Game g){
+    public boolean saveGame(Game g) throws IOException {
         // check if the player have play the game before
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("game/"+g.level,true));
-            writer.append(g.player + " " + g.mapId + " " + g.score + "\n");
-            writer.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-            return false;
+        boolean existed = false;
+        List<String> lines = Files.readAllLines(Paths.get("game/"+g.level));
+        System.out.println(lines.size());
+        int tmp = countLine("game/"+g.level);
+        for (int n = 0; n < tmp; n++){
+            String line = lines.get(n);
+            String[] words = line.split("\\s+");
+            if (g.player.equals(words[0]) && g.mapId == Integer.parseInt(words[1])){
+                System.out.println("the player have play the game before");
+                existed = true;
+                if(Integer.parseInt(words[2]) > g.score){
+                    // rewrite the n line
+                    lines.set(n,g.player + " " + g.mapId + " " + g.score);
+                    Files.write(Paths.get("game/"+g.level), lines, StandardCharsets.UTF_8);
+                }
+                break;
+            }
+        }
+
+        if (!existed){
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("game/"+g.level,true));
+                writer.append(g.player + " " + g.mapId + " " + g.score + "\n");
+                writer.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
 
     //TODO:
-    public Game[] getLeaderboard(int id){
+    public Game[] getLeaderboard(int id, String level){
+        Game[] top5 = new Game[5];
+
         return null;
+    }
+
+    public static Game getGameFromLine(int n, String level){
+        try{
+            String line = Files.readAllLines(Paths.get("game/"+level)).get(n);
+            String[] words = line.split("\\s+");
+            return new Game(Integer.parseInt(words[1]),Integer.parseInt(words[2]),words[0],level);
+        }
+        catch(IOException e){
+            System.out.println(e);
+            return null;
+        }
     }
 
     public static int countLine(String fileName) { // count nb of line in the storing text file
@@ -117,9 +154,9 @@ public class GameService { // why this shit live in game-backend folder
             }
         }
         */
-
+        System.out.println(countLine("map/easy"));
         System.out.println(getMap("easy"));
-
+        System.out.println(getGameFromLine(4, "easy"));
     }
 
 }

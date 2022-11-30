@@ -30,14 +30,14 @@ public class GameController {
     }
 
     @ResponseBody
-    @GetMapping(path = "/leaderboard/{mapId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Game[] getLeaderboard(@PathVariable("mapId") int id){
+    @GetMapping(path = "/leaderboard/{level}/{mapId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Game[] getLeaderboard(@PathVariable("mapId") int id, @PathVariable("level") String level){
         System.out.println("get leaderboard endpoint works");
-        return this.gameService.getLeaderboard(id);
+        return this.gameService.getLeaderboard(id, level);
     }
 
     @PostMapping(path = "/game", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public String saveGame(@RequestBody Game game){
+    public String saveGame(@RequestBody Game game) throws IOException {
         System.out.println("save game endpoint works");
         System.out.println(game.toString());
         if (this.gameService.saveGame(game)) {
