@@ -9,6 +9,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Random;
 
 @Service
 public class GameService { // why this shit live in game-backend folder
@@ -36,7 +39,19 @@ public class GameService { // why this shit live in game-backend folder
         return res;
     }
 
-    public Map getMap(String level){
+    public static Map getMap(String level){
+        Random r = new Random();
+        int n = r.nextInt( countLine("map/"+level));
+        try{
+            String line = Files.readAllLines(Paths.get("map/"+level)).get(n);
+            System.out.println(n);
+            System.out.println(line);
+            String[] words = line.split("\\s+");
+            return new Map(Integer.parseInt(words[0]),words[1],words[2]);
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
         return null;
     }
 
@@ -50,13 +65,26 @@ public class GameService { // why this shit live in game-backend folder
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
     }
 
+    // TODO:
+    // constraint of safe game : Only one score (the best one) for one player on a given grid.
     public boolean saveGame(Game g){
+        // check if the player have play the game before
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("game/"+g.level,true));
+            writer.append(g.player + " " + g.mapId + " " + g.score + "\n");
+            writer.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
+    //TODO:
     public Game[] getLeaderboard(int id){
         return null;
     }
@@ -80,7 +108,18 @@ public class GameService { // why this shit live in game-backend folder
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        generateMap("easy");
+
+        // generate map
+        /*
+        for (String s : new String[]{"easy", "medium", "hard", "very-hard", "insane", "inhuman"}){
+            for (int i = 0; i < 5; i++){
+                generateMap(s);
+            }
+        }
+        */
+
+        System.out.println(getMap("easy"));
+
     }
 
 }
