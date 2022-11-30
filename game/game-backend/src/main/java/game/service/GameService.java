@@ -4,7 +4,11 @@ import game.model.Game;
 import game.model.Map;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -12,18 +16,17 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class GameService { // why this shit live in game-backend folder
 
-    public static Map generateMap(String level) throws IOException, InterruptedException {
+    public static Map generateMap(final String level) throws IOException, InterruptedException {
         // sample of request "https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'}
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://sudoku.diverse-team.fr/sudoku-provider/"+level))
+                .uri(URI.create("https://sudoku.diverse-team.fr/sudoku-provider/" + level))
                 .header("responseType", "text")
                 .build();
 
@@ -35,15 +38,15 @@ public class GameService { // why this shit live in game-backend folder
         System.out.println(response.body().getClass().getName()); // String
         */
 
-        Map res = new Map(countLine("map/"+level),response.body(),level);
+        Map res = new Map(countLine("map/" + level), response.body(), level);
         saveMap(res);
         System.out.println(res);
         return res;
     }
 
-    public static Map getMap(String level){
+    public static Map getMap(String level) {
         Random r = new Random();
-        int n = r.nextInt( countLine("map/"+level));
+        int n = r.nextInt( countLine("map/" + level));
         try{
             String line = Files.readAllLines(Paths.get("map/"+level)).get(n);
             System.out.println(n);
@@ -108,10 +111,33 @@ public class GameService { // why this shit live in game-backend folder
     }
 
     //TODO:
-    public Game[] getLeaderboard(int id, String level){
-        Game[] top5 = new Game[5];
-
-        return null;
+    public List<Game> getLeaderboard(int id, String level) throws IOException {
+        List<Game> top5 = new ArrayList<>();
+        List<String> lines = Files.readAllLines(Paths.get("game/"+level));
+        Set<Integer> res = new HashSet<Integer>();
+        int min = 99999;
+        int minIndex = -1;
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < lines.size(); j++){
+                String[] tmp = lines.get(j).split("\\s+");
+                if (!res.contains(j) && Integer.parseInt(tmp[1]) == id){
+                    if(Integer.parseInt(tmp[2]) < min){
+                        minIndex = j;
+                        min = Integer.parseInt(tmp[2]);
+                    }
+                }
+            }
+            if (minIndex != -1){
+                res.add(minIndex);
+                String[] tmp = lines.get(minIndex).split("\\s+");
+                top5.add(new Game(id, min, tmp[0], level));
+            } else {
+                break;
+            }
+            minIndex = -1;
+            min = 99999;
+        }
+        return top5;
     }
 
     public static Game getGameFromLine(int n, String level){
