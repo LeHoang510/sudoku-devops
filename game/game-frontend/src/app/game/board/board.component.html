@@ -1,5 +1,5 @@
 <div class="end-board" *ngIf="gameService.game.checkEnd()">
-  END GAME BITCH !!!
+  END GAME {{gameService.game.player}} !!!
   <br>
   <p style="font-size: 20px;"> Score: {{gameService.coups}}</p>
   <br>
@@ -23,13 +23,13 @@
         <p style=" position: absolute; bottom: 0px; right: 0px; margin-bottom: 0; margin-right: 10px;">
           {{x}}
         </p>
-        <div class="mouse-sensor"
+        <!-- <div class="mouse-sensor"
              (mouseenter)="mouseEnter(x)"
              (mouseleave)="mouseLeave(x)"
              [ioKeydown] (keydownBinder)="setValKey($event, x)"
              *ngIf="gameService.game.map2.cas[x] == 0"
         >
-        </div>
+        </div> -->
         <mat-select disableOptionCentering 
                     panelClass="select-tile"
                     class="tile-select-html"

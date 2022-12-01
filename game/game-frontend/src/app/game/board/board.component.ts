@@ -22,6 +22,11 @@ export class BoardComponent implements OnInit,AfterViewInit {
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event:Event) {
+    event.preventDefault();
+  }
+
   end : boolean = false
   setByKeyPossible : boolean = false
   histWidth : string
@@ -74,7 +79,9 @@ export class BoardComponent implements OnInit,AfterViewInit {
     binder
     .toProduce(() => {
       console.log("dit con ba gia du di me from inside directSet func")
-      return new SetValue(this.gameService.game.map.helpTiles[index].values().next().value, index, this.gameService.game)
+      var tmp = this.gameService.game.map.helpTiles[index].values().next().value
+      this.increaseCoup(tmp)
+      return new SetValue(tmp, index, this.gameService.game)
     })
     .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size === 1)
     .bind();

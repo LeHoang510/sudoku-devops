@@ -2,11 +2,14 @@
     <img style="max-width:80%" src="../../../assets/ranking.svg">
 </button>
 <br>
+<!-- useful link -->
+<!-- https://material.angular.io/components/input/overview -->
 <mat-form-field appearance="fill">
     <mat-label>Joueur</mat-label>
-    <input matInput 
+    <input matInput
            (change)="test()"
-           [(ngModel)]="gameService.game.player">
+           [(ngModel)]="gameService.game.player"
+           required>
 </mat-form-field>
 <br>
 <p>Coups: {{gameService.coups}}</p>
