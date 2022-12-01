@@ -55,9 +55,10 @@ export class BoardComponent implements OnInit,AfterViewInit {
   }
 
   increaseCoup(val: number){
-    if (val != 0){
-      this.gameService.coups ++;
-    }
+    // if (val != 0){
+    //   this.gameService.coups ++;
+    // }
+    this.gameService.coups ++;
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
