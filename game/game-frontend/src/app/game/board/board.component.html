@@ -7,7 +7,7 @@
   <div style="float:right; width: 50% ; max-height: fit-content;">
     <mat-grid-list cols="9" rowHeight="1:1">
       <mat-grid-tile *ngFor="let x of a">
-        <p style=" position: absolute; top: 0px; right: 0px; margin-top: 0;">
+        <p style=" position: absolute; top: 0px; right: 0px; margin-top: 0;" *ngIf = "gameService.wSuggestion">
           {{printRecSet(x)}}
         </p>
         <p style=" position: absolute; bottom: 0px; right: 0px; margin-bottom: 0; margin-right: 10px;">

@@ -3,6 +3,7 @@ import { GameService } from '../service/game.service';
 import { FormBuilder } from '@angular/forms';
 import { Level } from '../models/level';
 import { Router } from '@angular/router';
+import { SetValue } from 'src/app/command/set-value';
 
 @Component({
   selector: 'app-menu',
@@ -10,14 +11,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  //image = SetValue.getSnapshot(this.gameService.game,2);
   level = Level;
-  selected = Level.easy;
+  // selected = Level.easy;
   suggestion = this._formBuilder.group({
     suggested: false,
   });
-  constructor(public gameService : GameService, private _formBuilder: FormBuilder, private router: Router,) { }
+  constructor(public gameService : GameService, private _formBuilder: FormBuilder, private router: Router) { 
+    
+  }
 
   ngOnInit(): void {
+    //this.suggestion.value.suggested = false;
   }
 
   test(){
@@ -25,6 +30,16 @@ export class MenuComponent implements OnInit {
   }
 
   navigationBoard(){
-      this.router.navigateByUrl('/board');
+    this.gameService.initGame();
+    this.router.navigateByUrl('/board');
+  }
+
+  getLevel(l : Level){
+    this.gameService.level = l;
+  }
+
+  checkSuggestion(event : boolean){
+    this.gameService.wSuggestion = <boolean> this.suggestion.value.suggested;
+    //console.log("wSuggestion" + this.gameService;
   }
 }

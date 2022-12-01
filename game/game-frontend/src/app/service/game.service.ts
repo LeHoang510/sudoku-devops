@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Map } from '../models/map';
 import { Game } from '../models/game'
 import { HttpClient } from '@angular/common/http';
+import { Level } from '../models/level';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,15 @@ export class GameService {
   private m2: Map;
   public game : Game;
   public coups : number;
+  public level : Level;
+  public wSuggestion : boolean;
   
   constructor(private http: HttpClient) {
     this.coups = 0;
     this.m = new Map();
     this.m2 = new Map();
     this.game = new Game(this.m, this.m2);
+    this.level = Level.easy;
 
     //test error cases
     // this.game.errors.push(3);
@@ -43,7 +47,7 @@ export class GameService {
   
   // Try promise and async
   async initGame(){
-    const res = await this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'}).toPromise()
+    const res = await this.http.get(`https://sudoku.diverse-team.fr/sudoku-provider/${this.level}`,{'responseType': 'text'}).toPromise()
     const data = res!
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
