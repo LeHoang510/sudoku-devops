@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
-import { PartialPointBinder } from 'interacto';
+import { PartialPointBinder, PartialKeyBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
-import { PartialMatSelectBinder, TreeHistoryComponent } from 'interacto-angular';
+import { PartialMatSelectBinder,TreeHistoryComponent } from 'interacto-angular';
 // import { MatGridList } from '@angular/material/grid-list';
 @Component({
   selector: 'app-board',
@@ -22,6 +22,13 @@ export class BoardComponent implements OnInit,AfterViewInit {
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event:Event) {
+    event.preventDefault();
+  }
+
+  end : boolean = false
+  setByKeyPossible : boolean = false
   histWidth : string
 
   a = Array.from(Array(81).keys());
@@ -48,16 +55,20 @@ export class BoardComponent implements OnInit,AfterViewInit {
   }
 
   increaseCoup(val: number){
-    if (val != 0){
-      this.gameService.coups ++;
-    }
+    // if (val != 0){
+    //   this.gameService.coups ++;
+    // }
+    this.gameService.coups ++;
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
   // for producing an undoable command SetValue
   public setValue(binder: PartialMatSelectBinder, index: number) {
     
-    binder.toProduce(i => new SetValue(parseInt(i.change?.value), index, this.gameService.game))
+    binder.toProduce((i) => {
+      console.log("dit con ba gia du di me from inside setValue func")
+      return new SetValue(parseInt(i.change?.value), index, this.gameService.game)
+    })
     .bind();
 
   }
@@ -67,8 +78,25 @@ export class BoardComponent implements OnInit,AfterViewInit {
   public directSet(binder: PartialPointBinder, index: number) {
 
     binder
-    .toProduce(() => new SetValue(this.gameService.game.map.cas[index], index, this.gameService.game))
+    .toProduce(() => {
+      console.log("dit con ba gia du di me from inside directSet func")
+      var tmp = this.gameService.game.map.helpTiles[index].values().next().value
+      this.increaseCoup(tmp)
+      return new SetValue(tmp, index, this.gameService.game)
+    })
     .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size === 1)
+    .bind();
+
+  }
+
+  public setValKey(binder: PartialKeyBinder, index: number) {
+
+    binder
+    .toProduce((e) => {
+      console.log("dit con ba gia du di me from inside setValKey func" + e.key)
+      return new SetValue(parseInt(e.key), index, this.gameService.game)
+    })
+    .when(i => this.setByKeyPossible)
     .bind();
 
   }
@@ -79,6 +107,26 @@ export class BoardComponent implements OnInit,AfterViewInit {
       res = res+i.toString()
     })
     return res
+  }
+
+  public mouseEnter(index : number){
+
+    // for debug purpose
+    console.log("mouse in " + index)
+
+    this.setByKeyPossible = true;
+  }
+
+  public mouseLeave(index : number){
+
+    // for debug purpose
+    console.log("mouse out " + index)
+
+    this.setByKeyPossible = false;
+  }
+
+  public returnToMenu() : void {
+    console.log("returned to menu")
   }
 
 }

@@ -1,3 +1,13 @@
+<div class="end-board" *ngIf="gameService.game.checkEnd()">
+  END GAME {{gameService.game.player}} !!!
+  <br>
+  <p style="font-size: 20px;"> Score: {{gameService.coups}}</p>
+  <br>
+  <button mat-stroked-button (click)="returnToMenu()" [style.background]="'whitesmoke'">
+    return to menu
+  </button>
+</div>
+
 <div style="width: 100%; height: 100%;">
 
   <div #h style="float:left; width: 50%;">
@@ -13,6 +23,13 @@
         <p style=" position: absolute; bottom: 0px; right: 0px; margin-bottom: 0; margin-right: 10px;">
           {{x}}
         </p>
+        <!-- <div class="mouse-sensor"
+             (mouseenter)="mouseEnter(x)"
+             (mouseleave)="mouseLeave(x)"
+             [ioKeydown] (keydownBinder)="setValKey($event, x)"
+             *ngIf="gameService.game.map2.cas[x] == 0"
+        >
+        </div> -->
         <mat-select disableOptionCentering 
                     panelClass="select-tile"
                     class="tile-select-html"
