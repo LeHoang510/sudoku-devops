@@ -3,6 +3,7 @@ import { GameService } from 'src/app/service/game.service';
 import { PartialPointBinder, PartialKeyBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
 import { PartialMatSelectBinder,TreeHistoryComponent } from 'interacto-angular';
+import { Router } from '@angular/router';
 // import { MatGridList } from '@angular/material/grid-list';
 @Component({
   selector: 'app-board',
@@ -33,7 +34,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   a = Array.from(Array(81).keys());
 
-  public constructor (public gameService: GameService) {}
+  public constructor (public gameService: GameService, private router : Router) {}
 
   ngOnInit(): void {
     
@@ -126,7 +127,8 @@ export class BoardComponent implements OnInit,AfterViewInit {
   }
 
   public returnToMenu() : void {
-    console.log("returned to menu")
+    console.log("returned to menu");
+    this.router.navigateByUrl('/menu');
   }
 
 }
