@@ -28,13 +28,13 @@ public class GameService { // why this shit live in game-backend folder
     public static Map generateMap(final String level) throws IOException, InterruptedException {
         // sample of request "https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'}
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
+        final HttpClient client = HttpClient.newHttpClient();
+        final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://sudoku.diverse-team.fr/sudoku-provider/" + level))
                 .header("responseType", "text")
                 .build();
 
-        HttpResponse<String> response = client.send(request,
+        final HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
         /*
@@ -42,20 +42,20 @@ public class GameService { // why this shit live in game-backend folder
         System.out.println(response.body().getClass().getName()); // String
         */
 
-        Map res = new Map(countLine("map/" + level), response.body(), level);
+        final Map res = new Map(countLine("map/" + level), response.body(), level);
         saveMap(res);
         System.out.println(res);
         return res;
     }
 
     public static Map getMap(final String level) {
-        Random r = new Random();
-        int n = r.nextInt(countLine("map/" + level));
+        final Random r = new Random();
+        final int n = r.nextInt(countLine("map/" + level));
         try {
-            String line = Files.readAllLines(Paths.get("map/" + level)).get(n);
+            final String line = Files.readAllLines(Paths.get("map/" + level)).get(n);
             System.out.println(n);
             System.out.println(line);
-            String[] words = line.split("\\s+");
+            final String[] words = line.split("\\s+");
             return new Map(Integer.parseInt(words[0]), words[1], words[2]);
         } catch (IOException e) {
             System.out.println(e);
@@ -65,7 +65,7 @@ public class GameService { // why this shit live in game-backend folder
 
     public static void saveMap(final Map m) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
+            final BufferedWriter writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
             writer.append(m.id + " " + m.level + " " + m.map + "\n");
             writer.close();
             System.out.println("Successfully wrote to the file.");
@@ -78,12 +78,12 @@ public class GameService { // why this shit live in game-backend folder
     public boolean saveGame(final Game g) throws IOException {
         // check if the player have play the game before
         boolean existed = false;
-        List<String> lines = Files.readAllLines(Paths.get("game/" + g.level));
+        final List<String> lines = Files.readAllLines(Paths.get("game/" + g.level));
         System.out.println(lines.size());
-        int tmp = countLine("game/" + g.level);
+        final int tmp = countLine("game/" + g.level);
         for (int n = 0; n < tmp; n++) {
-            String line = lines.get(n);
-            String[] words = line.split("\\s+");
+            final String line = lines.get(n);
+            final String[] words = line.split("\\s+");
             if (g.player.equals(words[0]) && g.mapId == Integer.parseInt(words[1])) {
                 System.out.println("the player have play the game before");
                 existed = true;
@@ -98,7 +98,7 @@ public class GameService { // why this shit live in game-backend folder
 
         if (!existed) {
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("game/" + g.level, true));
+                final BufferedWriter writer = new BufferedWriter(new FileWriter("game/" + g.level, true));
                 writer.append(g.player + " " + g.mapId + " " + g.score + "\n");
                 writer.close();
                 System.out.println("Successfully wrote to the file.");
@@ -111,14 +111,14 @@ public class GameService { // why this shit live in game-backend folder
         return true;
     }
     public List<Game> getLeaderboard(int id, final String level) throws IOException {
-        List<Game> top5 = new ArrayList<>();
-        List<String> lines = Files.readAllLines(Paths.get("game/" + level));
-        Set<Integer> res = new HashSet<Integer>();
+        final List<Game> top5 = new ArrayList<>();
+        final List<String> lines = Files.readAllLines(Paths.get("game/" + level));
+        final Set<Integer> res = new HashSet<Integer>();
         int min = 99999;
         int minIndex = -1;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < lines.size(); j++) {
-                String[] tmp = lines.get(j).split("\\s+");
+                final String[] tmp = lines.get(j).split("\\s+");
                 if (!res.contains(j) && Integer.parseInt(tmp[1]) == id) {
                     if (Integer.parseInt(tmp[2]) < min) {
                         minIndex = j;
@@ -128,7 +128,7 @@ public class GameService { // why this shit live in game-backend folder
             }
             if (minIndex != -1) {
                 res.add(minIndex);
-                String[] tmp = lines.get(minIndex).split("\\s+");
+                final String[] tmp = lines.get(minIndex).split("\\s+");
                 top5.add(new Game(id, min, tmp[0], level));
             } else {
                 break;
@@ -141,8 +141,8 @@ public class GameService { // why this shit live in game-backend folder
 
     public static Game getGameFromLine(final int n, final String level) {
         try {
-            String line = Files.readAllLines(Paths.get("game/" + level)).get(n);
-            String[] words = line.split("\\s+");
+            final String line = Files.readAllLines(Paths.get("game/" + level)).get(n);
+            final String[] words = line.split("\\s+");
             return new Game(Integer.parseInt(words[1]), Integer.parseInt(words[2]), words[0], level);
         } catch (IOException e) {
             System.out.println(e);

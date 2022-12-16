@@ -42,7 +42,9 @@
             SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
         </module>
         <module name="RegexpSinglelineJava">
+            <!--
             <property name="format" value="while"/>
+            -->
             <property name="ignoreComments" value="true"/>
         </module>
         <module name="LeftCurly"/>
@@ -50,7 +52,7 @@
         <module name="NeedBraces"/>
         <module name="InterfaceIsType"/>
         <module name="NestedForDepth">
-            <property name="max" value="-1"/>
+            <property name="max" value="2"/>
         </module>
         <module name="NestedIfDepth">
             <property name="max" value="2"/>

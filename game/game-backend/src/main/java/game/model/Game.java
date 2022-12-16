@@ -6,7 +6,7 @@ public class Game {
     public int score;
     public String player;
 
-    public Game(int id, int s, String player, String l){
+    public Game(final int id, final int s, final String player, final String l) {
         this.mapId = id;
         this.score = s;
         this.player = player;
