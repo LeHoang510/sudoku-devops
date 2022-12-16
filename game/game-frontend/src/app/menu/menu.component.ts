@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameService } from '../service/game.service';
 import { FormBuilder } from '@angular/forms';
 import { Level } from '../models/level';
@@ -11,6 +11,9 @@ import { SetValue } from 'src/app/command/set-value';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+
+  @ViewChild('imgTarget') imgTarget:ElementRef;
+
   //image = SetValue.getSnapshot(this.gameService.game,2);
   level = Level;
   // selected = Level.easy;
@@ -23,6 +26,10 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     //this.suggestion.value.suggested = false;
+  }
+
+  ngAfterViewInit() {
+    this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game, -1));
   }
 
   test(){
@@ -41,5 +48,9 @@ export class MenuComponent implements OnInit {
   checkSuggestion(event : boolean){
     this.gameService.wSuggestion = <boolean> this.suggestion.value.suggested;
     //console.log("wSuggestion" + this.gameService;
+  }
+
+  public getVisualSnapshot(): Promise<HTMLElement> | HTMLElement | undefined {
+    return SetValue.getSnapshot(this.gameService.game, 0);
   }
 }
