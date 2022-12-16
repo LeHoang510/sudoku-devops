@@ -15,11 +15,11 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
-                "mapId=" + mapId +
-                ", level='" + level + '\'' +
-                ", score=" + score +
-                ", player='" + player + '\'' +
-                '}';
+        return "Game{"
+                + "mapId=" + mapId
+                + ", level='" + level + '\''
+                + ", score=" + score
+                + ", player='" + player + '\''
+                + '}';
     }
 }
