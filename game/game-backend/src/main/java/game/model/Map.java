@@ -5,7 +5,7 @@ public class Map {
     public String map;
     public String level;
 
-    public Map(int id, String map, String level){
+    public Map(final int id, final String map, final String level) {
         this.id = id;
         this.map = map;
         this.level = level;
@@ -13,10 +13,10 @@ public class Map {
 
     @Override
     public String toString() {
-        return "Map{" +
-                "id=" + id +
-                ", map='" + map + '\'' +
-                ", level='" + level + '\'' +
-                '}';
+        return "Map{"
+                + "id=" + id
+                + ", map='" + map + '\''
+                + ", level='" + level + '\''
+                + '}';
     }
 }
