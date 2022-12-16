@@ -110,7 +110,7 @@ public class GameService { // why this shit live in game-backend folder
         }
         return true;
     }
-    public List<Game> getLeaderboard(int id, final String level) throws IOException {
+    public List<Game> getLeaderboard(final int id, final String level) throws IOException {
         final List<Game> top5 = new ArrayList<>();
         final List<String> lines = Files.readAllLines(Paths.get("game/" + level));
         final Set<Integer> res = new HashSet<Integer>();
