@@ -73,7 +73,7 @@ public class GameService { // why this shit live in game-backend folder
             System.out.println("An error occurred.");
             e.printStackTrace();
         } finally {
-            if (writer != null){
+            if (writer != null) {
                 writer.close();
             }
             System.out.println("Successfully wrote to the file.");
