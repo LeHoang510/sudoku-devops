@@ -63,15 +63,20 @@ public class GameService { // why this shit live in game-backend folder
         return null;
     }
 
-    public static void saveMap(final Map m) {
+    public static void saveMap(final Map m) throws IOException {
+        BufferedWriter writer = null;
         try {
-            final BufferedWriter writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
+            writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
             writer.append(m.id + " " + m.level + " " + m.map + "\n");
-            writer.close();
-            System.out.println("Successfully wrote to the file.");
+
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        } finally {
+            if (writer != null){
+                writer.close();
+            }
+            System.out.println("Successfully wrote to the file.");
         }
     }
     // constraint of safe game : Only one score (the best one) for one player on a given grid.
@@ -97,15 +102,16 @@ public class GameService { // why this shit live in game-backend folder
         }
 
         if (!existed) {
+            final BufferedWriter writer = new BufferedWriter(new FileWriter("game/" + g.level, true));
             try {
-                final BufferedWriter writer = new BufferedWriter(new FileWriter("game/" + g.level, true));
                 writer.append(g.player + " " + g.mapId + " " + g.score + "\n");
-                writer.close();
-                System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
                 System.out.println("An error occurred.");
                 e.printStackTrace();
                 return false;
+            } finally {
+                writer.close();
+                System.out.println("Successfully wrote to the file.");
             }
         }
         return true;
@@ -160,7 +166,7 @@ public class GameService { // why this shit live in game-backend folder
         */
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            while (reader.readLine() != null) {
+            while (reader.readLine() != "") {
                 lines++;
             }
         } catch (IOException e) {
