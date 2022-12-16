@@ -166,7 +166,7 @@ public class GameService { // why this shit live in game-backend folder
         */
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            while (reader.readLine() != "") {
+            while (!reader.readLine().equals("")) {
                 lines++;
             }
         } catch (IOException e) {
