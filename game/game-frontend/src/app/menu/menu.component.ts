@@ -53,4 +53,9 @@ export class MenuComponent implements OnInit {
   public getVisualSnapshot(): Promise<HTMLElement> | HTMLElement | undefined {
     return SetValue.getSnapshot(this.gameService.game, 0);
   }
+
+  public existingGame(){
+    this.gameService.callExistingGame();
+    this.router.navigateByUrl('/board');
+  }
 }
