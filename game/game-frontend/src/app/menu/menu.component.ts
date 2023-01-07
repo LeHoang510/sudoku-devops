@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameService } from '../service/game.service';
 import { FormBuilder } from '@angular/forms';
 import { Level } from '../models/level';
@@ -10,7 +10,7 @@ import { SetValue } from 'src/app/command/set-value';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements AfterViewInit, OnInit {
 
   @ViewChild('imgTarget') imgTarget:ElementRef;
 
@@ -26,17 +26,21 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     //this.suggestion.value.suggested = false;
+    this.gameService.callExistingGame();
   }
 
   ngAfterViewInit() {
-    this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game, -1));
+    setTimeout(() => {
+      this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game, -1));
+    },0)
+    
   }
 
   test(){
     console.log(this.gameService.game.player)
   }
 
-  navigationBoard(){
+  generateMap(){
     this.gameService.initGame();
     this.router.navigateByUrl('/board');
   }
@@ -55,7 +59,7 @@ export class MenuComponent implements OnInit {
   }
 
   public existingGame(){
-    this.gameService.callExistingGame();
+    
     this.router.navigateByUrl('/board');
   }
 }
