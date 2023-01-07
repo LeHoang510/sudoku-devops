@@ -46,11 +46,11 @@ export class MenuComponent implements AfterViewInit, OnInit {
   }
 
   getLevel(l : Level){
-    this.gameService.level = l;
+    this.gameService.game.level = l;
   }
 
   checkSuggestion(event : boolean){
-    this.gameService.wSuggestion = <boolean> this.suggestion.value.suggested;
+    this.gameService.game.wSuggestion = <boolean> this.suggestion.value.suggested;
     //console.log("wSuggestion" + this.gameService;
   }
 

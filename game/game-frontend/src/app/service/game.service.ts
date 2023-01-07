@@ -12,9 +12,7 @@ export class GameService {
   private m: Map;
   private m2: Map;
   public game : Game;
-  public level : Level;
-  public wSuggestion : boolean;
-  private mapID : string;
+
 
   //for leaderboard
   hasLeaderBoard : boolean;
@@ -25,8 +23,8 @@ export class GameService {
   constructor(private http: HttpClient) {
     this.m = new Map();
     this.m2 = new Map();
-    this.game = new Game(this.m, this.m2);
-    this.level = Level.easy;
+    this.game = new Game(this.m, this.m2, http);
+    this.game.level = Level.easy;
     this.players =[]
     this.scores =[]
     this.hasLeaderBoard = false;
@@ -56,12 +54,12 @@ export class GameService {
   
   // Try promise and async
   async initGame(){
-    const res = await this.http.get(`http://localhost:4445/newGame/${this.level}`,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`http://localhost:4445/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res)
     let body = JSON.parse(JSON.stringify(res))
     console.log('map '+body['map'])
     console.log('ID '+body['id'])
-    this.mapID = body['id']
+    this.game.mapID = body['id']
     const data = body['map']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
@@ -88,13 +86,13 @@ export class GameService {
   }
 
   async callExistingGame(){
-    const res = await this.http.get(`http://localhost:4445/game/${this.level}`,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`http://localhost:4445/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res);
     let body = JSON.parse(JSON.stringify(res))
     console.log('map '+body['level'])
     console.log('ID '+body['id'])
-    this.mapID = body['id']
-    console.log('ID after call '+ this.mapID)
+    this.game.mapID = body['id']
+    console.log('ID after call '+ this.game.mapID)
     const data = body['level']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
@@ -106,10 +104,11 @@ export class GameService {
       }
     }
     this.game.updateHelpTiles()
-    this.callLeaderBoard(this.mapID)
+    this.callLeaderBoard(this.game.mapID)
   }
+
   async callLeaderBoard(idmap: string){
-    const res = await this.http.get(`http://localhost:4445/leaderboard/${this.level}/`+idmap,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`http://localhost:4445/leaderboard/${this.game.level}/`+idmap,{'responseType': 'json'}).toPromise()
     console.log(res);
     let body = JSON.parse(JSON.stringify(res))
     this.scores=[]

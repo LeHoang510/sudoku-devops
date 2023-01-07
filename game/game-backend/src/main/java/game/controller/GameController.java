@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.IOException;
 import java.util.List;
 
+
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class GameController {
 
     @Autowired
@@ -49,7 +51,7 @@ public class GameController {
         if (this.gameService.saveGame(game)) {
             return "game saved";
         } else {
-            return "server failed dumb bitch";
+            return "game havent saved yet dumb bitch";
         }
     }
 }

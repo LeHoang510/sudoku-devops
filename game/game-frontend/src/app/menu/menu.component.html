@@ -13,7 +13,7 @@
 
 <div class="box-map">
     <mat-form-field appearance="fill">
-        <mat-select [(value)]="gameService.level" (selectionChange)="getLevel($event.value)">
+        <mat-select [(value)]="gameService.game.level" (selectionChange)="getLevel($event.value)">
           <mat-option value = {{enum.value}} *ngFor="let enum of level | keyvalue">
             {{enum.value}}
           </mat-option>
@@ -28,7 +28,7 @@
 
 <div class="suggestion" [formGroup]="suggestion">
 <h4>You chose:</h4>
-{{gameService.wSuggestion}}
+{{gameService.game.wSuggestion}}
 
 </div>
-<p>You selected: {{this.gameService.level}}</p>
+<p>You selected: {{this.gameService.game.level}}</p>

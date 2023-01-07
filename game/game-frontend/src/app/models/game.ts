@@ -1,13 +1,18 @@
 import { Map } from "./map";
+import { Level } from "./level";
+import { HttpClient } from '@angular/common/http';
 export class Game {
 
     public player : string;
     public coups : number;
+    public mapID : string;
+    public wSuggestion : boolean;
+    public level : Level;
     public map : Map;
     public map2 : Map;
-    public errors : {[id:number]:number[]} =  {};
+    public errors : {[id:number]:number[]} = {};
 
-    public constructor(m: Map, m2: Map){
+    public constructor(m: Map, m2: Map, private http:HttpClient){
         // for storing value
         this.map = m;
         // to check if it is a given case
@@ -52,73 +57,6 @@ export class Game {
             }
             return Object.keys(this.errors).length === 0;
         }else{
-            // Sinon, comparer le avec les cas en même ligne, même colonne
-            // var r = this.getY(index)
-            // var c = this.getX(index)
-            // for (let i=0;i<9;i++){
-            //     //Comparer avec les cas en même ligne, si égal, créer or ajouter dans errors[index]
-            //     if((value == this.map.cas[r*9 + i])&&((r*9+i != index))){
-            //         if (index in this.errors){
-            //             this.errors[index].push(r*9+i);
-            //         }else{
-            //             this.errors[index] = [r*9+i];
-            //         }
-            //     }else{
-            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-            //         if ((index) in this.errors){
-            //             if (this.errors[index].includes(r*9+i)){
-            //                 this.errors[index].splice(this.errors[index].indexOf(r*9+i),1); 
-            //             }
-            //             //Si la liste errors[index] est vide, supprimer la clé
-            //             if (this.errors[index].length == 0){
-            //                 delete(this.errors[index]);
-            //             } 
-            //         }
-            //     }
-            //     //Comparer avec les cas en même colone, si égal, créer or ajouter dans errors[index]
-            //     if((value == this.map.cas[c + i*9])&&((c + i*9 != index))){
-            //         if ((index) in this.errors){
-            //             this.errors[index].push(c+i*9);
-            //         }else{
-            //             this.errors[index] = [c+i*9];
-            //         }
-            //     }else{
-            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-            //         if ((index) in this.errors){
-            //             if (this.errors[index].includes(c+i*9)){
-            //                 this.errors[index].splice(this.errors[index].indexOf(c+i*9),1);
-
-            //             }
-            //             //Si la liste errors[index] est vide, supprimer la clé
-            //             if (this.errors[index].length == 0){
-            //                 delete(this.errors[index]);
-            //             }    
-            //         }
-            //     }
-
-            //     //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
-            //     var tmp = this.getSq(index)
-            //     if((value == this.map.cas[tmp[i]])&&((tmp[i] != index))){
-            //         if ((index) in this.errors){
-            //             this.errors[index].push(tmp[i]);
-            //         }else{
-            //             this.errors[index] = [tmp[i]];
-            //         }
-            //     }else{
-            //     //Si les 2 ne sont pas égaux, retirer le cas de la liste errors[index] s'il existe
-            //         if ((index) in this.errors){
-            //             if (this.errors[index].includes(tmp[i])){
-            //                 this.errors[index].splice(this.errors[index].indexOf(tmp[i]),1);
-
-            //             }
-            //             //Si la liste errors[index] est vide, supprimer la clé
-            //             if (this.errors[index].length == 0){
-            //                 delete(this.errors[index]);
-            //             }    
-            //         }
-            //     }
-            // }
-
             var res1 = this.checkBloc(index,value)
             var res2 = this.checkCol(index,value) 
             var res3 = this.checkLig(index,value)
@@ -153,14 +91,6 @@ export class Game {
                 }
             }
         }
-
-        // for debug purpose
-        // if(!res){
-        //     console.log("fault bloc")
-        // } else {
-        //     console.log("bonne bloc")
-        // }
-
         return res
     }
 
@@ -191,14 +121,6 @@ export class Game {
                 }
             }
         }
-
-        // for debug purpose
-        // if(!res){
-        //     console.log("fault col")
-        // } else {
-        //     console.log("bonne col")
-        // }
-
         return res
     }
 
@@ -229,14 +151,6 @@ export class Game {
                 }
             }
         }
-
-        // for debug purpose
-        // if(!res){
-        //     console.log("fault ligne")
-        // } else {
-        //     console.log("bonne ligne")
-        // }
-
         return res
     }
 
@@ -245,6 +159,16 @@ export class Game {
         this.checkCase(i,val)
         this.map.cas[i]=val
         this.updateHelpTiles()
+        if (this.checkEnd()){
+            if(Object.keys(this.errors).length === 0){
+                this.http.post<any>('http://localhost:4445/game', { 
+                    "mapId":this.mapID,
+                    "level":this.level,
+                    "score":this.coups,
+                    "player":this.player
+                }).subscribe();
+            }
+        }
     }
 
     public getX(index : number) : number {
@@ -312,14 +236,6 @@ export class Game {
             } else {
                 this.map.helpTiles[i].clear()
             }
-
-            // for debug purpose
-
-            // let res :string = ''
-            // this.map.helpTiles[i].forEach(function(i){
-            //     res = res+i.toString()
-            // })
-            // console.log("for case " + i + " val : " + this.map.cas[i] + ", Rec tiles : " + res)
         }
     }
 
