@@ -22,6 +22,6 @@ export class LeaderboardComponent implements OnInit {
 
   openDialog(){
     this.dialog.open(DialogComponent,{});
-    console.log(this.gameService.coups); 
+    console.log("coups: " +this.gameService.coups); 
   }
 }

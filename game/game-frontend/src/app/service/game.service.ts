@@ -15,6 +15,13 @@ export class GameService {
   public coups : number;
   public level : Level;
   public wSuggestion : boolean;
+  private mapID : string;
+
+  //for leaderboard
+  hasLeaderBoard : boolean;
+  public players : string[];
+  public scores : number[];
+
   
   constructor(private http: HttpClient) {
     this.coups = 0;
@@ -22,6 +29,10 @@ export class GameService {
     this.m2 = new Map();
     this.game = new Game(this.m, this.m2);
     this.level = Level.easy;
+    this.players =[]
+    this.scores =[]
+    this.hasLeaderBoard = false;
+
 
     //test error cases
     // this.game.errors.push(3);
@@ -50,7 +61,9 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/newGame/${this.level}`,{'responseType': 'json'}).toPromise()
     console.log(res)
     let body = JSON.parse(JSON.stringify(res))
-    console.log('body '+body['map'])
+    console.log('map '+body['map'])
+    console.log('ID '+body['id'])
+    this.mapID = body['id']
     const data = body['map']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
@@ -79,7 +92,10 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/game/${this.level}`,{'responseType': 'json'}).toPromise()
     console.log(res);
     let body = JSON.parse(JSON.stringify(res))
-    console.log('body '+body['level'])
+    console.log('map '+body['level'])
+    console.log('ID '+body['id'])
+    this.mapID = body['id']
+    console.log('ID after call '+ this.mapID)
     const data = body['level']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
@@ -91,6 +107,20 @@ export class GameService {
       }
     }
     this.game.updateHelpTiles()
+    this.callLeaderBoard(this.mapID)
   }
-
+  async callLeaderBoard(idmap: string){
+    const res = await this.http.get(`http://localhost:4445/leaderboard/${this.level}/`+idmap,{'responseType': 'json'}).toPromise()
+    console.log(res);
+    let body = JSON.parse(JSON.stringify(res))
+    for(var i=0;i<body.length;i++){
+      this.scores.push(parseInt(body[i]['score']))
+      this.players.push(body[i]['player'])
+    }
+    this.hasLeaderBoard =true;
+    //for test
+    for(var i=0;i<this.players.length;i++){
+      console.log("Player: "+this.players[i]+" score: "+this.scores[i])
+    }
+  }
 }

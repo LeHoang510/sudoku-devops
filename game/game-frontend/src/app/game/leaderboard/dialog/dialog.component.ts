@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { GameService } from 'src/app/service/game.service';
 
 @Component({
   selector: 'app-dialog',
@@ -7,7 +8,9 @@ import { Component, OnInit} from '@angular/core';
 })
 export class DialogComponent implements OnInit{
 
-  constructor(){
+  length : number[]
+  constructor(public gameService:GameService){
+    this.length = Array(this.gameService.players.length).fill(1).map((x,i)=>i+1);
   }
 
   ngOnInit(): void {
