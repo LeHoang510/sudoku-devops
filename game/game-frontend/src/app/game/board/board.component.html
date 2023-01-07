@@ -1,7 +1,7 @@
 <div class="end-board" *ngIf="gameService.game.checkEnd()">
   END GAME {{gameService.game.player}} !!!
   <br>
-  <p style="font-size: 20px;"> Score: {{gameService.coups}}</p>
+  <p style="font-size: 20px;"> Score: {{gameService.game.coups}}</p>
   <br>
   <button mat-stroked-button (click)="returnToMenu()" [style.background]="'whitesmoke'">
     return to menu
@@ -33,7 +33,7 @@
         <mat-select disableOptionCentering 
                     panelClass="select-tile"
                     class="tile-select-html"
-                    (selectionChange)="[increaseCoup($event.value),test($event.value,x)]"
+                    (selectionChange)="[test($event.value,x),increaseCoup($event.value)]"
                     [ioMatSelect] (matSelectBinder)="setValue($event, x)"
                     [ioClick] (clickBinder)="directSet($event, x)"
                     [value]="this.gameService.game.map.cas[x]"

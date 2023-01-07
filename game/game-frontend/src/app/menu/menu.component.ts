@@ -31,7 +31,7 @@ export class MenuComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game, -1));
+      this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game,-1,false));
     },0)
     
   }
@@ -55,7 +55,7 @@ export class MenuComponent implements AfterViewInit, OnInit {
   }
 
   public getVisualSnapshot(): Promise<HTMLElement> | HTMLElement | undefined {
-    return SetValue.getSnapshot(this.gameService.game, 0);
+    return SetValue.getSnapshot(this.gameService.game, 0, false);
   }
 
   public existingGame(){

@@ -12,7 +12,6 @@ export class GameService {
   private m: Map;
   private m2: Map;
   public game : Game;
-  public coups : number;
   public level : Level;
   public wSuggestion : boolean;
   private mapID : string;
@@ -24,7 +23,6 @@ export class GameService {
 
   
   constructor(private http: HttpClient) {
-    this.coups = 0;
     this.m = new Map();
     this.m2 = new Map();
     this.game = new Game(this.m, this.m2);
@@ -88,6 +86,7 @@ export class GameService {
     // }
     // this.game.updateHelpTiles()
   }
+
   async callExistingGame(){
     const res = await this.http.get(`http://localhost:4445/game/${this.level}`,{'responseType': 'json'}).toPromise()
     console.log(res);
@@ -113,6 +112,8 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/leaderboard/${this.level}/`+idmap,{'responseType': 'json'}).toPromise()
     console.log(res);
     let body = JSON.parse(JSON.stringify(res))
+    this.scores=[]
+    this.players=[]
     for(var i=0;i<body.length;i++){
       this.scores.push(parseInt(body[i]['score']))
       this.players.push(body[i]['player'])

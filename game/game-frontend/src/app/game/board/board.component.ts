@@ -48,18 +48,17 @@ export class BoardComponent implements OnInit,AfterViewInit {
   //for testing
   test(val : number, index : number){
     // test swaping dim functions 
-    console.log(this.gameService.game.getX(index))
-    console.log(this.gameService.game.getY(index))
-    console.log(...this.gameService.game.getSq(index))
-    console.log(...this.gameService.game.getCol(index))
-    console.log(...this.gameService.game.getLig(index))
+    // console.log(this.gameService.game.getX(index))
+    // console.log(this.gameService.game.getY(index))
+    // console.log(...this.gameService.game.getSq(index))
+    // console.log(...this.gameService.game.getCol(index))
+    // console.log(...this.gameService.game.getLig(index))
   }
 
   increaseCoup(val: number){
-    // if (val != 0){
-    //   this.gameService.coups ++;
-    // }
-    this.gameService.coups ++;
+    if (val != 0){
+      this.gameService.game.coups ++;
+    }
   }
 
   // Interacto binding that maps the selection of a value in an Angular Material Select
@@ -82,7 +81,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
     .toProduce(() => {
       console.log("dit con ba gia du di me from inside directSet func")
       var tmp = this.gameService.game.map.helpTiles[index].values().next().value
-      this.increaseCoup(tmp)
+      this.increaseCoup(tmp);
       return new SetValue(tmp, index, this.gameService.game)
     })
     .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size === 1)

@@ -1,7 +1,8 @@
 import { Map } from "./map";
 export class Game {
 
-    public player : string
+    public player : string;
+    public coups : number;
     public map : Map;
     public map2 : Map;
     public errors : {[id:number]:number[]} =  {};
@@ -11,6 +12,7 @@ export class Game {
         this.map = m;
         // to check if it is a given case
         this.map2 = m2;
+        this.coups = 0;
     }
 
     //Verifier si cas est dans errors
@@ -153,11 +155,11 @@ export class Game {
         }
 
         // for debug purpose
-        if(!res){
-            console.log("fault bloc")
-        } else {
-            console.log("bonne bloc")
-        }
+        // if(!res){
+        //     console.log("fault bloc")
+        // } else {
+        //     console.log("bonne bloc")
+        // }
 
         return res
     }
@@ -191,11 +193,11 @@ export class Game {
         }
 
         // for debug purpose
-        if(!res){
-            console.log("fault col")
-        } else {
-            console.log("bonne col")
-        }
+        // if(!res){
+        //     console.log("fault col")
+        // } else {
+        //     console.log("bonne col")
+        // }
 
         return res
     }
@@ -229,11 +231,11 @@ export class Game {
         }
 
         // for debug purpose
-        if(!res){
-            console.log("fault ligne")
-        } else {
-            console.log("bonne ligne")
-        }
+        // if(!res){
+        //     console.log("fault ligne")
+        // } else {
+        //     console.log("bonne ligne")
+        // }
 
         return res
     }

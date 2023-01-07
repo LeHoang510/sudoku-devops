@@ -7,13 +7,15 @@ export class SetValue extends UndoableCommand{
     oldValue : number;
     index : number;
     game : Game;
+    isRisky : boolean;
 
     public constructor(val: number , i: number, g: Game ) {
         super();
         this.value = val;
         this.index = i;
         this.game = g;
-        this.oldValue = 0
+        this.oldValue = 0;
+        this.isRisky = this.game.map.helpTiles[i]?.size > 1;
     }
 
     protected override createMemento() {
@@ -41,10 +43,10 @@ export class SetValue extends UndoableCommand{
     
     
     public override getVisualSnapshot(): Promise<HTMLElement> | HTMLElement | undefined {
-        return SetValue.getSnapshot(this.game, this.index);
+        return SetValue.getSnapshot(this.game, this.index, this.isRisky);
     }
 
-    public static getSnapshot(game: Game, indexChanged?: number): HTMLImageElement {
+    public static getSnapshot(game: Game, indexChanged: number, isRisky:boolean): HTMLImageElement {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d")!;
         const tileSize = 110;
@@ -52,31 +54,69 @@ export class SetValue extends UndoableCommand{
         canvas.height = 1000;
         ctx.font = '100px Bodo';
         ctx.fillStyle = 'black';
-        // paint case
-        for (let i = 0; i < game.map.cas.length; i++){
-            if(game.map.cas[i]==0){
-                ctx.fillText("", 
-                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
-            } else if(i==indexChanged){
-                if(game.checkCase2(i)){
+
+        if(isRisky && game.map.cas[indexChanged]!=0){ // paint risky
+            for (let i = 0; i < game.map.cas.length; i++){
+                if(game.map.cas[i]==0){
+                    ctx.fillStyle = 'purple';
+                    ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    ctx.fillStyle = 'black'
+                    ctx.fillText("", 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                } else if(i==indexChanged){
+                    if(game.checkCase2(i)){
+                        ctx.fillStyle = 'red';
+                        ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    }else{
+                        ctx.fillStyle = 'purple';
+                        ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    }
+                    ctx.fillStyle = 'green';
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                    ctx.fillStyle = 'black';
+                } else if(game.checkCase2(i)){
                     ctx.fillStyle = 'red';
                     ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    ctx.fillStyle = 'black';
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                } else {
+                    ctx.fillStyle = 'purple';
+                    ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    ctx.fillStyle = 'black'
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
                 }
-                ctx.fillStyle = 'green';
-                ctx.fillText(game.map.cas[i].toString(), 
-                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
-                ctx.fillStyle = 'black';
-            } else if(game.checkCase2(i)){
-                ctx.fillStyle = 'red';
-                ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
-                ctx.fillStyle = 'black';
-                ctx.fillText(game.map.cas[i].toString(), 
-                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
-            } else {
-                ctx.fillText(game.map.cas[i].toString(), 
-                            (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+            }
+        }else{ // paint not risky
+            for (let i = 0; i < game.map.cas.length; i++){
+                if(game.map.cas[i]==0){
+                    ctx.fillText("", 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                } else if(i==indexChanged){
+                    if(game.checkCase2(i)){
+                        ctx.fillStyle = 'red';
+                        ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    }
+                    ctx.fillStyle = 'green';
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                    ctx.fillStyle = 'black';
+                } else if(game.checkCase2(i)){
+                    ctx.fillStyle = 'red';
+                    ctx.fillRect((i % 9) * tileSize,Math.floor(i / 9) * tileSize,110,110)
+                    ctx.fillStyle = 'black';
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                } else {
+                    ctx.fillText(game.map.cas[i].toString(), 
+                                (i % 9) * tileSize + 30, Math.floor(i / 9) * tileSize + 85);
+                }
             }
         }
+
+        // paint case risky
         for(let i = 1; i < 9; i++) {
         ctx.moveTo(i * tileSize, 0);
         ctx.lineTo(i * tileSize, canvas.height);
