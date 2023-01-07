@@ -8,5 +8,9 @@ target
 .classpath
 .project
 .settings
-game/game-backend/game/
-game/game-backend/map/
+easy*
+medium*
+hard*
+very-hard*
+insane*
+inhuman*
