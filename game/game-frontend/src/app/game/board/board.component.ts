@@ -70,7 +70,6 @@ export class BoardComponent implements OnInit,AfterViewInit {
       return new SetValue(parseInt(i.change?.value), index, this.gameService.game)
     })
     .bind();
-
   }
 
   // Interacto binding that maps a click with the right button on an Angular Material Select

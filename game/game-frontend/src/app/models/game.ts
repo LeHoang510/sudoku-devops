@@ -159,7 +159,7 @@ export class Game {
         this.checkCase(i,val)
         this.map.cas[i]=val
         this.updateHelpTiles()
-        if (this.checkEnd()){
+        if (this.checkEnd()&&!this.wSuggestion){
             if(Object.keys(this.errors).length === 0){
                 this.http.post<any>('http://localhost:4445/game', { 
                     "mapId":this.mapID,

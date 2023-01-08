@@ -20,6 +20,9 @@ export class MenuComponent implements AfterViewInit, OnInit {
   suggestion = this._formBuilder.group({
     suggested: false,
   });
+
+  a = Array.from(Array(81).keys());
+
   constructor(public gameService : GameService, private _formBuilder: FormBuilder, private router: Router) { 
     
   }
@@ -33,7 +36,6 @@ export class MenuComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game,-1,false));
     },0)
-    
   }
 
   test(){

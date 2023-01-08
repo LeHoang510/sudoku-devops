@@ -3,6 +3,7 @@ import { Map } from '../models/map';
 import { Game } from '../models/game'
 import { HttpClient } from '@angular/common/http';
 import { Level } from '../models/level';
+import { TreeUndoHistory } from 'interacto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,13 @@ export class GameService {
   private m2: Map;
   public game : Game;
 
-
   //for leaderboard
   hasLeaderBoard : boolean;
   public players : string[];
   public scores : number[];
 
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private hist:TreeUndoHistory) {
     this.m = new Map();
     this.m2 = new Map();
     this.game = new Game(this.m, this.m2, http);
@@ -70,19 +70,8 @@ export class GameService {
         this.m2.cas[i] = 1;
       }
     }
+    this.hist.clear;
     this.game.updateHelpTiles()
-    // const res = await this.http.get(`https://sudoku.diverse-team.fr/sudoku-provider/${this.level}`,{'responseType': 'text'}).toPromise()
-    // const data = res!
-    // for (let i = 0; i < 81; i++){
-    //   this.m.cas[i]=parseInt(data.charAt(i));
-
-    //   if (this.m.cas[i] == 0){
-    //     this.m2.cas[i] = 0;
-    //   }else{
-    //     this.m2.cas[i] = 1;
-    //   }
-    // }
-    // this.game.updateHelpTiles()
   }
 
   async callExistingGame(){
@@ -103,6 +92,7 @@ export class GameService {
         this.m2.cas[i] = 1;
       }
     }
+    this.hist.clear;
     this.game.updateHelpTiles()
     this.callLeaderBoard(this.game.mapID)
   }

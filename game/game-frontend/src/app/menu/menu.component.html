@@ -1,4 +1,4 @@
-<mat-form-field appearance="fill">
+<mat-form-field>
     <mat-label>Player name</mat-label>
     <input matInput 
            (change)="test()"
@@ -12,23 +12,23 @@
 <p class="suggestion">Select a map to play or replay with: </p>
 
 <div class="box-map">
-    <mat-form-field appearance="fill">
+    <mat-form-field>
         <mat-select [(value)]="gameService.game.level" (selectionChange)="getLevel($event.value)">
           <mat-option value = {{enum.value}} *ngFor="let enum of level | keyvalue">
             {{enum.value}}
           </mat-option>
         </mat-select>
-      </mat-form-field>   
-      <button class="buttonGenerateMap" (click)="generateMap()" >Generate random board</button>
-     <button (click)="existingGame()">Existing game</button>
+    </mat-form-field>   
+
+    <button class="buttonGenerateMap" (click)="generateMap()" >Generate random board</button>
+    <div class="board">
+      <mat-grid-list cols="9" rowHeight="1:1" (click)="existingGame()">
+        <mat-grid-tile *ngFor="let x of a">
+          <p class="center" *ngIf="gameService.game.map2.cas[x] == 1">
+            {{gameService.game.map.cas[x]}} 
+          </p>
+          <p class="center" *ngIf="gameService.game.map2.cas[x] != 1"></p>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
 </div>
-<span #imgTarget></span>
-
-<p class="consigne">Click on a Sudoku board to launch the game with.</p>
-
-<div class="suggestion" [formGroup]="suggestion">
-<h4>You chose:</h4>
-{{gameService.game.wSuggestion}}
-
-</div>
-<p>You selected: {{this.gameService.game.level}}</p>
