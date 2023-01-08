@@ -26,7 +26,7 @@ export class GameService {
     this.game.level = Level.easy;
     this.players =[]
     this.scores =[]
-    this.game.player = 'Foo'
+    this.game.player = ''
   }
   
   // Try promise and async

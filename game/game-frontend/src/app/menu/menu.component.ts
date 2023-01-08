@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { GameService } from '../service/game.service';
 import { FormBuilder } from '@angular/forms';
 import { Level } from '../models/level';
@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.callExistingGame();
+    this.gameService.game.player='';
   }
 
   test(){
@@ -52,7 +53,6 @@ export class MenuComponent implements OnInit {
   }
 
   public existingGame(){
-    
     this.router.navigateByUrl('/board');
   }
 }

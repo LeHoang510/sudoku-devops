@@ -34,10 +34,12 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   a = Array.from(Array(81).keys());
 
-  public constructor (public gameService: GameService, private router : Router) {}
+  public constructor (public gameService: GameService, private router : Router) {
+    console.log("build board component");
+  }
 
   ngOnInit(): void {
-    
+    if(this.gameService.game.player == '') this.gameService.game.player = this.makeid();
   }
 
   public ngAfterViewInit(): void {
@@ -108,25 +110,19 @@ export class BoardComponent implements OnInit,AfterViewInit {
     return res
   }
 
-  public mouseEnter(index : number){
-
-    // for debug purpose
-    console.log("mouse in " + index)
-
-    this.setByKeyPossible = true;
-  }
-
-  public mouseLeave(index : number){
-
-    // for debug purpose
-    console.log("mouse out " + index)
-
-    this.setByKeyPossible = false;
-  }
-
   public returnToMenu() : void {
     console.log("returned to menu");
     this.router.navigateByUrl('/menu');
   }
 
+  public makeid(){
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 10; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    console.log(result);
+    return result;
+  }
 }
