@@ -1,5 +1,4 @@
-
-export enum Level {
+export enum Level { //List of levels
     easy = "easy",
     medium = "medium",
     hard = "hard",

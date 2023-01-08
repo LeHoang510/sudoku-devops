@@ -1,4 +1,4 @@
-export class Map {
+export class Map { //value of each tiles with associated suggestion
     public cas: number[] ;
     public helpTiles : Set<number>[];
 

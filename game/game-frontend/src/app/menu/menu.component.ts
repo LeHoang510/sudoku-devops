@@ -12,47 +12,37 @@ import { SetValue } from 'src/app/command/set-value';
 })
 export class MenuComponent implements OnInit {
 
-  //image = SetValue.getSnapshot(this.gameService.game,2);
+  // For displaying different levels
   level = Level;
-  // selected = Level.easy;
+
+  // For creating checkbox 
   suggestion = this._formBuilder.group({
     suggested: false,
   });
 
+  // for filling the mat grid list
   a = Array.from(Array(81).keys());
 
-  constructor(public gameService : GameService, private _formBuilder: FormBuilder, private router: Router) { 
-    
-  }
+  constructor(public gameService : GameService, private _formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
+    // get an existing game upon creation of menu component
     this.gameService.callExistingGame();
+    // Initially no player name is provided, it can be assigned randomly upon the begining of the game
     this.gameService.game.player='';
   }
 
-  test(){
-    console.log(this.gameService.game.player)
-  }
-
-  generateMap(){
+  generateMap(){ //Get a new map get and go to board component to start playing the game
     this.gameService.initGame();
     this.router.navigateByUrl('/board');
   }
 
+  // Update the choosen level
   getLevel(l : Level){
     this.gameService.game.level = l;
   }
 
-  checkSuggestion(event : boolean){
-    this.gameService.game.wSuggestion = <boolean> this.suggestion.value.suggested;
-    //console.log("wSuggestion" + this.gameService;
-  }
-
-  public getVisualSnapshot(): Promise<HTMLElement> | HTMLElement | undefined {
-    return SetValue.getSnapshot(this.gameService.game, 0, false);
-  }
-
-  public existingGame(){
+  public existingGame(){ //start playing the game with an existing map
     this.router.navigateByUrl('/board');
   }
 }

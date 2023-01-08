@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit { // the sodoku title
 
   title = 'Sudoku';
   constructor(private router: Router) { }
@@ -14,8 +14,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  // For Returning to the menu when clicked
   navigationMenu(){
     this.router.navigateByUrl('/menu');
-
   }
 }

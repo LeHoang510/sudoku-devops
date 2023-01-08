@@ -13,13 +13,9 @@ export class LeaderboardComponent implements OnInit {
 
   constructor(public dialog : MatDialog, public gameService: GameService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  test(){
-    console.log(this.gameService.game.player)
-  }
-
+  // open the leaderboard
   openDialog(){
     this.dialog.open(DialogComponent,{});
     console.log("coups: " +this.gameService.game.coups); 

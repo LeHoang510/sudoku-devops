@@ -8,14 +8,15 @@ export class Game {
     public mapID : string;
     public wSuggestion : boolean;
     public level : Level;
+    // for storing value
     public map : Map;
+    // to check if it is a given case
     public map2 : Map;
+    // Errors associated to each tiles
     public errors : {[id:number]:number[]} = {};
 
     public constructor(m: Map, m2: Map, private http:HttpClient){
-        // for storing value
         this.map = m;
-        // to check if it is a given case
         this.map2 = m2;
         this.coups = 0;
     }
@@ -64,6 +65,7 @@ export class Game {
         }
     }
 
+    // Detecter les erreur dans un meme bloc
     checkBloc(index : number, value : number) : boolean{
         var res = true // true = no error ; false = error
         var tmp = this.getSq(index)
@@ -94,6 +96,7 @@ export class Game {
         return res
     }
 
+    // Detecter les erreur dans un meme colonne
     checkCol(index : number, value : number) : boolean{
         var res = true // true = no error ; false = error
         var tmp = this.getCol(index)
@@ -124,6 +127,7 @@ export class Game {
         return res
     }
 
+    // Detecter les erreur dans une meme ligne
     checkLig(index : number, value : number) : boolean{
         var res = true // true = no error ; false = error
         var tmp = this.getLig(index)
@@ -154,11 +158,18 @@ export class Game {
         return res
     }
 
-    public setValue(i:number, val : number){ // check case + check end game
+    // Set value 
+    public setValue(i:number, val : number){
+        // For debuging
         console.log("case " + i + " from "+ this.map.cas[i] + " to "+ val ) 
+        // check case if there is error upon the move
         this.checkCase(i,val)
+        // Change the value of the case
         this.map.cas[i]=val
+        // Update suggested tiles
         this.updateHelpTiles()
+
+        // Check if endgame if yes save gave in the backend
         if (this.checkEnd()&&!this.wSuggestion){
             if(Object.keys(this.errors).length === 0){
                 this.http.post<any>('http://localhost:4445/game', { 
@@ -170,15 +181,50 @@ export class Game {
             }
         }
     }
+    
+    // update help tiles of every case
+    public updateHelpTiles(){
+        for (let i = 0; i < 81; i++){
+            if (this.map.cas[i] == 0){
+                
+                for (var j = 1; j <= 9; j++){
+                    this.map.helpTiles[i].add(j)
+                }
 
+                for(var a = 0; a < 9; a++){
+                    this.map.helpTiles[i].delete(this.map.cas[this.getCol(i)[a]])
+                    this.map.helpTiles[i].delete(this.map.cas[this.getLig(i)[a]])
+                    this.map.helpTiles[i].delete(this.map.cas[this.getSq(i)[a]])
+                }
+            } else {
+                this.map.helpTiles[i].clear()
+            }
+        }
+    }
+
+    // Check if endgame
+    public checkEnd() : boolean{
+        for (let c of this.map.cas){
+            if (c == 0){
+                return false
+            }
+        }
+        return Object.keys(this.errors).length === 0;
+    }
+
+    //////////////////////////////////////// BELOW ARE THE SET OF FUNCTION FOR WORKING WITH 2D MAP FROM A 1D ARRAY
+
+    // Get column
     public getX(index : number) : number {
         return index % 9
     }
 
+    // Get line
     public getY(index : number) : number {
         return Math.floor(index/9)
     }
 
+    // From and 2D coord to 1D coord
     public twoDtoOneD (x : number, y: number) : number{
         return y*9 + x;
     }
@@ -207,9 +253,7 @@ export class Game {
     public getSq(index : number) : number[]{
         var res:number[] = []
         var xOffset = Math.floor(this.getX(index) / 3)
-        // console.log(xOffset)
         var yOffset = Math.floor(this.getY(index) / 3)
-        // console.log(yOffset)
         for (var i = 0; i<3; i++){
             for (var j = 0; j<3; j++){
                 res.push(this.twoDtoOneD(xOffset*3+i,yOffset*3+j))
@@ -217,34 +261,5 @@ export class Game {
         }
         return res
     }
-    
-    // update help tiles of every case
-    public updateHelpTiles(){
-        for (let i = 0; i < 81; i++){
-            if (this.map.cas[i] == 0){
-                
-                for (var j = 1; j <= 9; j++){
-                    this.map.helpTiles[i].add(j)
-                }
-
-                for(var a = 0; a < 9; a++){
-                    this.map.helpTiles[i].delete(this.map.cas[this.getCol(i)[a]])
-                    this.map.helpTiles[i].delete(this.map.cas[this.getLig(i)[a]])
-                    this.map.helpTiles[i].delete(this.map.cas[this.getSq(i)[a]])
-                }
-            } else {
-                this.map.helpTiles[i].clear()
-            }
-        }
-    }
-
-    public checkEnd() : boolean{
-        for (let c of this.map.cas){
-            if (c == 0){
-                return false
-            }
-        }
-        return Object.keys(this.errors).length === 0;
-    }
-
+    ///////////////////////////////////////////////////////// END
 }

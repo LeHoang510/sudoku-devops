@@ -36,11 +36,10 @@
   width: 40%;
 }
 
-.buttonGenerateMap:hover, .box-map .mat-form-field:hover{
+.buttonGenerateMap:hover, .box-map .mat-form-field:hover ,.board:hover{
   transform: translate(1px, 1px);
   box-shadow: lightgray 0 0 5px;
   background-color: lightgrey;
-  border-radius: 10px;
 }
 
 .consigne{

@@ -4,7 +4,6 @@ import { PartialPointBinder, PartialKeyBinder } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
 import { PartialMatSelectBinder,TreeHistoryComponent } from 'interacto-angular';
 import { Router } from '@angular/router';
-// import { MatGridList } from '@angular/material/grid-list';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -13,16 +12,20 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit,AfterViewInit {
 
+  // undo history
   @ViewChild('treeComp')
   private treeComp: TreeHistoryComponent;
+  // container of undo history
   @ViewChild('h')
   private h: ElementRef<HTMLElement>;
 
+  // making size of history interactive
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
+  // Disable default treatment of right click event
   @HostListener('contextmenu', ['$event'])
   onRightClick(event:Event) {
     event.preventDefault();
@@ -32,18 +35,20 @@ export class BoardComponent implements OnInit,AfterViewInit {
   setByKeyPossible : boolean = false
   histWidth : string
 
+  // for filling tiles of mat grid list 
   a = Array.from(Array(81).keys());
 
   public constructor (public gameService: GameService, private router : Router) {
     console.log("build board component");
   }
 
+  // Give the player random name if they didn't enter anything
   ngOnInit(): void {
     if(this.gameService.game.player == '') this.gameService.game.player = this.makeid();
   }
 
+  // set width of history component
   public ngAfterViewInit(): void {
-    // this thing out an error in the console
     this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
@@ -57,6 +62,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
     // console.log(...this.gameService.game.getLig(index))
   }
 
+  // increase number of moves
   increaseCoup(val: number){
     if (val != 0){
       this.gameService.game.coups ++;
@@ -68,36 +74,29 @@ export class BoardComponent implements OnInit,AfterViewInit {
   public setValue(binder: PartialMatSelectBinder, index: number) {
     
     binder.toProduce((i) => {
-      console.log("dit con ba gia du di me from inside setValue func")
+      console.log("inside setValue func")
       return new SetValue(parseInt(i.change?.value), index, this.gameService.game)
     })
     .bind();
   }
 
   // Interacto binding that maps a click with the right button on an Angular Material Select
-  // for producing an undoable command SetValue that durectly uses the single suggested value
+  // for easily producing an undoable command SetValue with rightclick and the help of recommended values
   public directSet(binder: PartialPointBinder, index: number) {
     binder
     .toProduce(() => {
       console.log("from inside directSet func")
+      // get the first value from the list of recommended values
       var tmp = this.gameService.game.map.helpTiles[index].values().next().value
       this.increaseCoup(tmp);
       return new SetValue(tmp, index, this.gameService.game)
     })
+    // only produce when right click and the recommended values arent empty
     .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size >= 1)
     .bind();
   }
 
-  public setValKey(binder: PartialKeyBinder, index: number) {
-    binder
-    .toProduce((e) => {
-      console.log("from inside setValKey func" + e.key)
-      return new SetValue(parseInt(e.key), index, this.gameService.game)
-    })
-    .when(i => this.setByKeyPossible)
-    .bind();
-  }
-
+  // For displaying the recommended values to the screen if player plays with suggestion
   public printRecSet(index : number) : string{
     let res :string = ''
     this.gameService.game.map.helpTiles[index].forEach(function(i){
@@ -106,11 +105,13 @@ export class BoardComponent implements OnInit,AfterViewInit {
     return res
   }
 
+  // Return to menu when clicked the sodoku icon
   public returnToMenu() : void {
     console.log("returned to menu");
     this.router.navigateByUrl('/menu');
   }
 
+  // Generate random name for player
   public makeid(){
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -51,7 +51,7 @@ public class GameController {
         if (this.gameService.saveGame(game)) {
             return "game saved";
         } else {
-            return "game havent saved yet dumb bitch";
+            return "game haven't been saved yet";
         }
     }
 }
