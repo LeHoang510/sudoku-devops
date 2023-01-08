@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { GameService } from 'src/app/service/game.service';
-import { PartialPointBinder, PartialKeyBinder } from 'interacto';
+import { PartialPointBinder, PartialKeyBinder, UndoableSnapshot } from 'interacto';
 import { SetValue } from 'src/app/command/set-value';
 import { PartialMatSelectBinder,TreeHistoryComponent } from 'interacto-angular';
 import { Router } from '@angular/router';
@@ -121,5 +121,9 @@ export class BoardComponent implements OnInit,AfterViewInit {
     }
     console.log(result);
     return result;
+  }
+
+  public rootRenderer(): UndoableSnapshot {
+    return SetValue.getSnapshot(this.gameService.game,-1,false);
   }
 }
