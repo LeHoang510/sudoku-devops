@@ -10,9 +10,7 @@ import { SetValue } from 'src/app/command/set-value';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements AfterViewInit, OnInit {
-
-  @ViewChild('imgTarget') imgTarget:ElementRef;
+export class MenuComponent implements OnInit {
 
   //image = SetValue.getSnapshot(this.gameService.game,2);
   level = Level;
@@ -28,14 +26,7 @@ export class MenuComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    //this.suggestion.value.suggested = false;
     this.gameService.callExistingGame();
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.imgTarget.nativeElement.appendChild(SetValue.getSnapshot(this.gameService.game,-1,false));
-    },0)
   }
 
   test(){

@@ -6,14 +6,16 @@
 </mat-form-field>
 
 <div class="suggestion" [formGroup]="suggestion" >
-    <p><mat-checkbox formControlName="suggested" (change)="checkSuggestion($event.checked)">With suggestions (prevent recording the score)</mat-checkbox></p>
+    <p>
+      <mat-checkbox formControlName="suggested" [(ngModel)]="gameService.game.wSuggestion">With suggestions (prevent recording the score)</mat-checkbox>
+    </p>
 </div>
   
 <p class="suggestion">Select a map to play or replay with: </p>
 
 <div class="box-map">
     <mat-form-field>
-        <mat-select [(value)]="gameService.game.level" (selectionChange)="getLevel($event.value)">
+        <mat-select [(value)]="gameService.game.level" (selectionChange)="[getLevel($event.value),gameService.callExistingGame()]">
           <mat-option value = {{enum.value}} *ngFor="let enum of level | keyvalue">
             {{enum.value}}
           </mat-option>
@@ -32,3 +34,5 @@
       </mat-grid-list>
     </div>
 </div>
+
+<p class="consigne">Click on a Sudoku board to launch the game with.</p>

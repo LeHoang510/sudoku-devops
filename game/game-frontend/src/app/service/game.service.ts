@@ -15,7 +15,6 @@ export class GameService {
   public game : Game;
 
   //for leaderboard
-  hasLeaderBoard : boolean;
   public players : string[];
   public scores : number[];
 
@@ -27,33 +26,12 @@ export class GameService {
     this.game.level = Level.easy;
     this.players =[]
     this.scores =[]
-    this.hasLeaderBoard = false;
-
-
-    //test error cases
-    // this.game.errors.push(3);
-    // this.game.errors.push(2);
-
-    // this.http.get("https://sudoku.diverse-team.fr/sudoku-provider/easy",{'responseType': 'text'})
-    // .subscribe({
-    //   next: (x:string) => {for (let i = 0; i < 81; i++){
-    //     this.m.cas[i]=parseInt(x.charAt(i));
-    //     if (this.m.cas[i] == 0){
-    //       this.m2.cas[i] = 0;
-    //     }else{
-    //       this.m2.cas[i] = 1;
-    //     }
-    //   }}
-    // });
-
-    //this.initGame()
-    
-    
     this.game.player = 'Foo'
   }
   
   // Try promise and async
   async initGame(){
+    console.log("generate game");
     const res = await this.http.get(`http://localhost:4445/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res)
     let body = JSON.parse(JSON.stringify(res))
@@ -63,7 +41,6 @@ export class GameService {
     const data = body['map']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
-
       if (this.m.cas[i] == 0){
         this.m2.cas[i] = 0;
       }else{
@@ -75,23 +52,25 @@ export class GameService {
   }
 
   async callExistingGame(){
+    console.log("call existing game");
     const res = await this.http.get(`http://localhost:4445/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res);
     let body = JSON.parse(JSON.stringify(res))
     console.log('map '+body['level'])
     console.log('ID '+body['id'])
-    this.game.mapID = body['id']
     console.log('ID after call '+ this.game.mapID)
+    // Update info of game
+    this.game.mapID = body['id']
     const data = body['level']
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
-
       if (this.m.cas[i] == 0){
         this.m2.cas[i] = 0;
       }else{
         this.m2.cas[i] = 1;
       }
     }
+    this.game.wSuggestion = false;
     this.hist.clear;
     this.game.updateHelpTiles()
     this.callLeaderBoard(this.game.mapID)
@@ -107,7 +86,6 @@ export class GameService {
       this.scores.push(parseInt(body[i]['score']))
       this.players.push(body[i]['player'])
     }
-    this.hasLeaderBoard =true;
     //for test
     for(var i=0;i<this.players.length;i++){
       console.log("Player: "+this.players[i]+" score: "+this.scores[i])
