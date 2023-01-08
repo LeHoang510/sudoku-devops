@@ -36,7 +36,7 @@
   width: 40%;
 }
 
-.buttonGenerateMap:hover, .box-map .mat-form-field:hover ,.board:hover{
+.buttonGenerateMap:hover,.board:hover{
   transform: translate(1px, 1px);
   box-shadow: lightgray 0 0 5px;
   background-color: lightgrey;
@@ -51,7 +51,7 @@
   margin-top: 0.7px;
   width: 70%;
   margin-left: 10%;
-
+  border: 5px solid black;
 }
 
 mat-grid-tile{

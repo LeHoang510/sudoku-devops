@@ -17,7 +17,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
   private treeComp: TreeHistoryComponent;
   // container of undo history
   @ViewChild('h')
-  private h: ElementRef<HTMLElement>;
+  private h: ElementRef<HTMLElement> = {} as ElementRef;
 
   // making size of history interactive
   @HostListener('window:resize', ['$event'])
