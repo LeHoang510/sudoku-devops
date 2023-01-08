@@ -232,7 +232,6 @@ export class Game {
                     this.map.helpTiles[i].delete(this.map.cas[this.getLig(i)[a]])
                     this.map.helpTiles[i].delete(this.map.cas[this.getSq(i)[a]])
                 }
-
             } else {
                 this.map.helpTiles[i].clear()
             }

@@ -19,7 +19,7 @@ export class GameService {
   public scores : number[];
 
   
-  constructor(private http: HttpClient, private hist:TreeUndoHistory) {
+  constructor(private http: HttpClient, public hist:TreeUndoHistory) {
     this.m = new Map();
     this.m2 = new Map();
     this.game = new Game(this.m, this.m2, http);
@@ -31,12 +31,14 @@ export class GameService {
   
   // Try promise and async
   async initGame(){
+    this.hist.clear();
     console.log("generate game");
     const res = await this.http.get(`http://localhost:4445/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res)
     let body = JSON.parse(JSON.stringify(res))
     console.log('map '+body['map'])
     console.log('ID '+body['id'])
+    // modify data of game in the game service
     this.game.mapID = body['id']
     const data = body['map']
     for (let i = 0; i < 81; i++){
@@ -47,11 +49,15 @@ export class GameService {
         this.m2.cas[i] = 1;
       }
     }
-    this.hist.clear;
+    this.scores=[]
+    this.players=[]
     this.game.updateHelpTiles()
   }
 
   async callExistingGame(){
+    // clear data of old game
+    this.hist.clear();
+    this.game.coups = 0;
     console.log("call existing game");
     const res = await this.http.get(`http://localhost:4445/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
     console.log(res);
@@ -71,7 +77,6 @@ export class GameService {
       }
     }
     this.game.wSuggestion = false;
-    this.hist.clear;
     this.game.updateHelpTiles()
     this.callLeaderBoard(this.game.mapID)
   }

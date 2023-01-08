@@ -77,29 +77,25 @@ export class BoardComponent implements OnInit,AfterViewInit {
   // Interacto binding that maps a click with the right button on an Angular Material Select
   // for producing an undoable command SetValue that durectly uses the single suggested value
   public directSet(binder: PartialPointBinder, index: number) {
-
     binder
     .toProduce(() => {
-      console.log("dit con ba gia du di me from inside directSet func")
+      console.log("from inside directSet func")
       var tmp = this.gameService.game.map.helpTiles[index].values().next().value
       this.increaseCoup(tmp);
       return new SetValue(tmp, index, this.gameService.game)
     })
-    .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size === 1)
+    .when(i => i.button === 2 && this.gameService.game.map.helpTiles[index]?.size >= 1)
     .bind();
-
   }
 
   public setValKey(binder: PartialKeyBinder, index: number) {
-
     binder
     .toProduce((e) => {
-      console.log("dit con ba gia du di me from inside setValKey func" + e.key)
+      console.log("from inside setValKey func" + e.key)
       return new SetValue(parseInt(e.key), index, this.gameService.game)
     })
     .when(i => this.setByKeyPossible)
     .bind();
-
   }
 
   public printRecSet(index : number) : string{
