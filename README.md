@@ -2,14 +2,14 @@
 
 ## Project overview
 
-## home page 
+### home page 
 ![](/images/homepage.png)
 **Features :**
 + choose levels
 + play with suggestion or not
 + register player name
 
-## Game board
+### Game board
 ![](/images/board.png)
 **Features :**
 + Undo/Redo history 
