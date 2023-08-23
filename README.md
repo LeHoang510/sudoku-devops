@@ -1,5 +1,24 @@
 # How to start the project
 
+## Project overview
+
+## home page 
+![](/images/homepage.png)
+**Features :**
++ choose levels
++ play with suggestion or not
++ register player name
+
+## Game board
+![](/images/board.png)
+**Features :**
++ Undo/Redo history 
++ Follow the leader board
++ Check validity of move
++ Track score 
++ save score after the game finish
+
+
 ## start the backend 
 ```
 cd game/game-backend
