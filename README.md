@@ -1,3 +1,4 @@
+#Project is developed by LE Vu Thuy Tu, Vu Thanh Tung, NGUYEN Le Hoang 
 # How to start the project
 
 ## Project overview
