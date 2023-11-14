@@ -19,6 +19,18 @@
 + Track score 
 + save score after the game finish
 
+## docker run for project
+```
+# terminal 1
+cd game/game-backend
+docker build -t sudoku-backend .
+docker run -d -p 4445:4445 sudoku-backend
+
+# terminal 2
+cd game/game-frontend
+docker build -t sudoku-frontend .
+docker run -d -p 8081:8081 --network host sudoku-frontend
+```
 
 ## start the backend 
 ```
