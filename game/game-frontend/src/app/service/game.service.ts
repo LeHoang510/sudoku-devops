@@ -4,15 +4,34 @@ import { Game } from '../models/game'
 import { HttpClient } from '@angular/common/http';
 import { Level } from '../models/level';
 import { TreeUndoHistory } from 'interacto';
+import { lastValueFrom } from 'rxjs';
 
+export interface NewGame{
+  id : number;
+  map : string;
+  level : Level;
+}
+export interface ExistingGame{
+  id : number;
+  map : Level;
+  level : string;
+}
+
+export interface Leaderboard{
+  mapId : number;
+  level : string;
+  score : number;
+  player : string;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class GameService {
 
   // For info of the game
-  private m: Map;
-  private m2: Map;
+  public m: Map;
+  public m2: Map;
   public game : Game;
 
   //for leaderboard
@@ -107,5 +126,17 @@ export class GameService {
     for(var i=0;i<this.players.length;i++){
       console.log("Player: "+this.players[i]+" score: "+this.scores[i])
     }
+  }
+
+  public getNewGame() : Promise<NewGame>{
+    return lastValueFrom(this.http.get<NewGame>(`http://localhost:4445/newGame/${this.game.level}`));
+  }
+
+  public getExistingGame() : Promise<ExistingGame>{
+    return lastValueFrom(this.http.get<ExistingGame>(`http://localhost:4445/game/${this.game.level}`));
+  }
+
+  public getLeaderBoard(idmap : string) : Promise<Array<Leaderboard>>{
+    return lastValueFrom(this.http.get<Array<Leaderboard>>(`http://localhost:4445/leaderboard/${this.game.level}/${idmap}`));
   }
 }
