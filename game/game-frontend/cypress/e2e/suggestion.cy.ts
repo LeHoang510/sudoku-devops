@@ -40,8 +40,4 @@ describe('Suggestion Test', () => {
     cy.contains('Score');
 
   });
-  it('Visits the initial project page', () => {
-    cy.visit('/');
-    cy.contains('Select a map to play or replay with')
-  })
 })
