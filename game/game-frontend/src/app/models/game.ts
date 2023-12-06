@@ -28,7 +28,7 @@ export class Game {
             return true;
         }
         //Verifier si cas est dans valeurs
-        for (let i in this.errors){
+        for (const i in this.errors){
             if (this.errors[i].includes(index)){
                 return true;
             }
@@ -41,7 +41,7 @@ export class Game {
 
         //si on change un cas à un valeur différent, supprimer ce cas dans toutes ces relations 
         if (value != this.map.cas[index]){
-            for (let i in this.errors){
+            for (const i in this.errors){
                 if (this.errors[i].includes(index)){
                     this.errors[i].splice(this.errors[i].indexOf(index),1);
                 }
@@ -57,18 +57,18 @@ export class Game {
                 delete(this.errors[index]);
             }
             return Object.keys(this.errors).length === 0;
-        }else{
-            var res1 = this.checkBloc(index,value)
-            var res2 = this.checkCol(index,value) 
-            var res3 = this.checkLig(index,value)
-            return res1 && res2 && res3
         }
+            const res1 = this.checkBloc(index,value)
+            const res2 = this.checkCol(index,value) 
+            const res3 = this.checkLig(index,value)
+            return res1 && res2 && res3
+        
     }
 
     // Detecter les erreur dans un meme bloc
     checkBloc(index : number, value : number) : boolean{
-        var res = true // true = no error ; false = error
-        var tmp = this.getSq(index)
+        let res = true // true = no error ; false = error
+        const tmp = this.getSq(index)
         
         //Comparer avec les cas en même bloc, si égal, créer or ajouter dans errors[index]
         for (let i=0;i<9;i++){
@@ -98,8 +98,8 @@ export class Game {
 
     // Detecter les erreur dans un meme colonne
     checkCol(index : number, value : number) : boolean{
-        var res = true // true = no error ; false = error
-        var tmp = this.getCol(index)
+        let res = true // true = no error ; false = error
+        const tmp = this.getCol(index)
 
         //Comparer avec les cas en même col, si égal, créer or ajouter dans errors[index]
         for (let i=0;i<9;i++){
@@ -129,8 +129,8 @@ export class Game {
 
     // Detecter les erreur dans une meme ligne
     checkLig(index : number, value : number) : boolean{
-        var res = true // true = no error ; false = error
-        var tmp = this.getLig(index)
+        let res = true // true = no error ; false = error
+        const tmp = this.getLig(index)
         
         //Comparer avec les cas en même ligne, si égal, créer or ajouter dans errors[index]
         for (let i=0;i<9;i++){
@@ -187,11 +187,11 @@ export class Game {
         for (let i = 0; i < 81; i++){
             if (this.map.cas[i] == 0){
                 
-                for (var j = 1; j <= 9; j++){
+                for (let j = 1; j <= 9; j++){
                     this.map.helpTiles[i].add(j)
                 }
 
-                for(var a = 0; a < 9; a++){
+                for(let a = 0; a < 9; a++){
                     this.map.helpTiles[i].delete(this.map.cas[this.getCol(i)[a]])
                     this.map.helpTiles[i].delete(this.map.cas[this.getLig(i)[a]])
                     this.map.helpTiles[i].delete(this.map.cas[this.getSq(i)[a]])
@@ -204,7 +204,7 @@ export class Game {
 
     // Check if endgame
     public checkEnd() : boolean{
-        for (let c of this.map.cas){
+        for (const c of this.map.cas){
             if (c == 0){
                 return false
             }
@@ -231,9 +231,9 @@ export class Game {
 
     // get the whole column
     public getCol(index : number) : number[]{
-        var res:number[] = []
-        var x = this.getX(index)
-        for (var i = 0; i<9; i++){
+        const res:number[] = []
+        const x = this.getX(index)
+        for (let i = 0; i<9; i++){
             res.push(this.twoDtoOneD(x,i))
         }
         return res
@@ -241,9 +241,9 @@ export class Game {
 
     // get the whole row
     public getLig(index : number) : number[]{
-        var res:number[] = []
-        var y = this.getY(index)
-        for (var i = 0; i<9; i++){
+        const res:number[] = []
+        const y = this.getY(index)
+        for (let i = 0; i<9; i++){
             res.push(this.twoDtoOneD(i,y))
         }
         return res
@@ -251,11 +251,11 @@ export class Game {
 
     // get the whole square
     public getSq(index : number) : number[]{
-        var res:number[] = []
-        var xOffset = Math.floor(this.getX(index) / 3)
-        var yOffset = Math.floor(this.getY(index) / 3)
-        for (var i = 0; i<3; i++){
-            for (var j = 0; j<3; j++){
+        const res:number[] = []
+        const xOffset = Math.floor(this.getX(index) / 3)
+        const yOffset = Math.floor(this.getY(index) / 3)
+        for (let i = 0; i<3; i++){
+            for (let j = 0; j<3; j++){
                 res.push(this.twoDtoOneD(xOffset*3+i,yOffset*3+j))
             }
         }

@@ -58,12 +58,12 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
     // printout the data
     console.log(res)
-    let body = JSON.parse(JSON.stringify(res))
-    console.log('map '+body['map'])
-    console.log('ID '+body['id'])
+    const body = JSON.parse(JSON.stringify(res))
+    console.log('map '+body.map)
+    console.log('ID '+body.id)
     // modify data of the game
-    this.game.mapID = body['id']
-    const data = body['map']
+    this.game.mapID = body.id
+    const data = body.map
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
       if (this.m.cas[i] == 0){
@@ -89,13 +89,13 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
     // Print the data of the existing game acquired from server
     console.log(res);
-    let body = JSON.parse(JSON.stringify(res))
-    console.log('map '+body['level'])
-    console.log('ID '+body['id'])
+    const body = JSON.parse(JSON.stringify(res))
+    console.log('map '+body.level)
+    console.log('ID '+body.id)
     console.log('ID after call '+ this.game.mapID)
     // Update info of game
-    this.game.mapID = body['id']
-    const data = body['level']
+    this.game.mapID = body.id
+    const data = body.level
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
       if (this.m.cas[i] == 0){
@@ -118,10 +118,10 @@ export class GameService {
     const res = await this.http.get(`http://localhost:4445/leaderboard/${this.game.level}/`+idmap,{'responseType': 'json'}).toPromise()
     console.log(res);
     // Add leaderboard data
-    let body = JSON.parse(JSON.stringify(res))
+    const body = JSON.parse(JSON.stringify(res))
     for(var i=0;i<body.length;i++){
-      this.scores.push(parseInt(body[i]['score']))
-      this.players.push(body[i]['player'])
+      this.scores.push(parseInt(body[i].score))
+      this.players.push(body[i].player)
     }
     for(var i=0;i<this.players.length;i++){
       console.log("Player: "+this.players[i]+" score: "+this.scores[i])

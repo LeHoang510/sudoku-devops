@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   // Give the player random name if they didn't enter anything
   ngOnInit(): void {
-    if(this.gameService.game.player == '') this.gameService.game.player = this.makeid();
+    if(this.gameService.game.player == '') {this.gameService.game.player = this.makeid();}
   }
 
   // set width of history component
@@ -87,7 +87,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
     .toProduce(() => {
       console.log("from inside directSet func")
       // get the first value from the list of recommended values
-      var tmp = this.gameService.game.map.helpTiles[index].values().next().value
+      const tmp = this.gameService.game.map.helpTiles[index].values().next().value
       this.increaseCoup(tmp);
       return new SetValue(tmp, index, this.gameService.game)
     })
@@ -113,10 +113,10 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   // Generate random name for player
   public makeid(){
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < 10; i++ ) {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < 10; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     console.log(result);
