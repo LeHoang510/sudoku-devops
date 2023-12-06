@@ -39,7 +39,7 @@ describe('GameService', () => {
     expect(newGame.level).toEqual('easy');
   });
 
-  it('new game works', async () => {
+  it('game works', async () => {
     const promise : Promise<ExistingGame> = service.getExistingGame();
     const testData = 
       {
