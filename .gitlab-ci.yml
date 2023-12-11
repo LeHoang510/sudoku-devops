@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
 
 build-back:
   image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-maven:3.8-openjdk-17
