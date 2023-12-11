@@ -39,38 +39,21 @@ describe('GameService', () => {
     expect(newGame.level).toEqual('easy');
   });
 
-  it('game works', async () => {
-    const promise : Promise<ExistingGame> = service.getExistingGame();
-    const testData = 
-      {
-        "id":11,
-        "map":"easy",
-        "level":"000342850000079420284061739973186540000234978802957613000790284398425167427618395"
-      }
-    const req = httpTestingController.expectOne('http://localhost:4445/game/easy');
-    expect(req.request.method).toEqual('GET');
-    req.flush(testData);
-    const existingGame: ExistingGame = await promise;
-    expect(existingGame.level.length).toEqual(81);
-    expect(existingGame.id).toEqual(11);
-    expect(existingGame.map).toEqual('easy');
-  });
-
   it('exsiting game works', async () => {
     const promise : Promise<ExistingGame> = service.getExistingGame();
     const testData = 
       {
         "id":11,
-        "map":"easy",
-        "level":"000342850000079420284061739973186540000234978802957613000790284398425167427618395"
+        "map":"000342850000079420284061739973186540000234978802957613000790284398425167427618395",
+        "level":"easy"
       }
     const req = httpTestingController.expectOne('http://localhost:4445/game/easy');
     expect(req.request.method).toEqual('GET');
     req.flush(testData);
     const existingGame: ExistingGame = await promise;
-    expect(existingGame.level.length).toEqual(81);
+    expect(existingGame.map.length).toEqual(81);
     expect(existingGame.id).toEqual(11);
-    expect(existingGame.map).toEqual('easy');
+    expect(existingGame.level).toEqual('easy');
   });
 
   it('leaderboard works', async () => {

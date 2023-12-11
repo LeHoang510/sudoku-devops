@@ -13,8 +13,8 @@ export interface NewGame{
 }
 export interface ExistingGame{
   id : number;
-  map : Level;
-  level : string;
+  map : string;
+  level : Level;
 }
 
 export interface Leaderboard{
@@ -90,12 +90,13 @@ export class GameService {
     // Print the data of the existing game acquired from server
     console.log(res);
     const body = JSON.parse(JSON.stringify(res))
-    console.log('map '+body.level)
+    console.log('level '+body.level)
+    console.log('map '+body.map)
     console.log('ID '+body.id)
     console.log('ID after call '+ this.game.mapID)
     // Update info of game
     this.game.mapID = body.id
-    const data = body.level
+    const data = body.map
     for (let i = 0; i < 81; i++){
       this.m.cas[i]=parseInt(data.charAt(i));
       if (this.m.cas[i] == 0){
