@@ -5,7 +5,7 @@ public class Map {
     public String map;
     public String level;
 
-    public Map(final int id, final String map, final String level) {
+    public Map(final int id, final String level, final String map) {
         this.id = id;
         this.map = map;
         this.level = level;
