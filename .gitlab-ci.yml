@@ -48,3 +48,14 @@ build-front:
       - game/game-frontend/dist/game-frontend/
     expire_in: 1 hour
 
+build-job-docker:      
+  stage: build
+  script:
+    - echo "Docker login to INSA Repository..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
+    - echo "Building Docker Image"
+    - docker build -t $CI_REGISTRY_IMAGE/test-devops/hello-world-build:latest . # build docker image
+    - echo "Building complete."
+    - docker push $CI_REGISTRY_IMAGE/test-devops/hello-world-build:latest # push docker image on the INSA Repository
+    - echo "Push on docker repository OK"
+
