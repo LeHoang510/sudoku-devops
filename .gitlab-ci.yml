@@ -32,6 +32,8 @@ build-front:
     - cd game/game-frontend
     - npm install
     #- npm run ng lint && npm run ng build -- --configuration production --build-optimizer
+    #- npm run test
+    #- npm run eslint
     - npm run ng build -- --configuration production --build-optimizer
   rules:
     - changes:
@@ -46,26 +48,45 @@ build-front:
       - game/game-frontend/dist/game-frontend/
     expire_in: 1 hour
 
-test-front:
-  image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-node:16.13.2
-  stage: test
-  cache:
-    paths:
-      - game/game-frontend/node_modules/
-  script:
-    - cd game/game-frontend
-    #- npm run ng lint && npm run ng build -- --configuration production --build-optimizer
-    - npm run test
-    - npm run eslint
+docker-back:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.5.1-debug
+    entrypoint: [""]
+  stage: deploy
   rules:
     - changes:
       - "*.md"
+      - "*.spec.ts"
+      - "*/src/test/*"
       when: never
     - changes:
-      - "game/game-frontend/**/*"
+      - "game-backend/**/*"
       - ".gitlab-ci.yml"
       when: always
-  artifacts:
-    paths:
-      - game/game-frontend/dist/game-frontend/
-    expire_in: 1 hour
+  dependencies:
+    - build-back
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR/game-backend --dockerfile $CI_PROJECT_DIR/game-backend/Dockerfile --destination $CI_REGISTRY_IMAGE/game-back:latest
+
+
+docker-front:
+  image: gcr.io/kaniko-project/executor:v1.5.1-debug
+  stage: deploy
+  dependencies: 
+    - build-front
+  rules:
+    - changes:
+      - "*.md"
+      - "*.spec.ts"
+      - "*/src/test/*"
+      when: never
+    - changes:
+      - "game-frontend/*"
+      - ".gitlab-ci.yml"
+      when: always
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR/game-frontend --dockerfile $CI_PROJECT_DIR/game-frontend/Dockerfile --destination $CI_REGISTRY_IMAGE/game-front:latest
