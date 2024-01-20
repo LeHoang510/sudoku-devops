@@ -59,7 +59,8 @@ describe('Test play game', () => {
     cy.contains('Rank');
     cy.contains('Name');
     cy.contains('Score');
-    cy.get('body').dblclick(100,100);
+    cy.get('body').click(100,100, {multiple: true});
+    cy.get('body').click(100,100, {multiple: true});
 
     cy.contains('Sudoku');
     cy.contains('HISTORY');
@@ -69,6 +70,13 @@ describe('Test play game', () => {
     ///////////////////////////////////////////////////////////
 
     cy.get('div.mat-form-field-flex').type('{selectall}{backspace} hoang');
+
+    cy.get('div.mat-select-value.ng-tns-c84-4').click();
+    cy.get('span.mat-option-text').contains('5').click();
+
+    cy.get('button.button-undo-redo').contains('undo').click();
+    cy.get('button.button-undo-redo').contains('redo').click();
+    cy.get('div.tree-node-history.ng-star-inserted').first().click();
 
     const input: string = "000342850000079420284061739973186540000234978802957613000790284398425167427618395";
     const arrayOfInput: string[] = Array.from(input);
