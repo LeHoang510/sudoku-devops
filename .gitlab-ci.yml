@@ -57,6 +57,7 @@ build-job-docker-frontend:
     - echo "Building Docker Image"
     - cd ./game/game-frontend
     - echo "REGISTRY IMG :" $CI_REGISTRY_IMAGE
+    - list dist/game-frontend/
     - docker build --pull -t $CI_REGISTRY_IMAGE/docker/front:latest . # build docker image
     - echo "Building complete in front-end."
     - docker push $CI_REGISTRY_IMAGE/docker/front:latest # push docker image on the INSA Repository
