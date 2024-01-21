@@ -1,6 +1,14 @@
-FROM registry.gitlab.inria.fr/diverse/docker/docker-image/insa-nginx:latest
+FROM node:latest
+WORKDIR /game-frontend
+COPY package.json .
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY dist/game-frontend /usr/share/nginx/html
+RUN npm install
 
-EXPOSE 8080
+COPY . .
+
+RUN npm run build
+
+EXPOSE 8081
+
+CMD ["npm", "start"]
+
