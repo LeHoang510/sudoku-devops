@@ -50,6 +50,7 @@ build-front:
 
 build-job-docker-frontend:      
   stage: docker-build
+  needs: ["build-front"]
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
@@ -63,6 +64,7 @@ build-job-docker-frontend:
 
 build-job-docker-backend:      
   stage: docker-build
+  needs: ["build-back"]
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
