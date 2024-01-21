@@ -43,7 +43,7 @@ spec:
           image: "gitlab.insa-rennes.fr:5050/devops-2023/projet-cpoo-thuy-tu-thanh-tung/docker/front"
           imagePullPolicy: Always
           ports:
-            - containerPort: 808
+            - containerPort: 8081
 
 ---
 apiVersion: v1
