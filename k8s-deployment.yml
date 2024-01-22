@@ -51,7 +51,7 @@ kind: Service
 metadata:
   name: backend-service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 4445
       targetPort: 4445
@@ -64,7 +64,7 @@ kind: Service
 metadata:
   name: frontend-service
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 8081
       targetPort: 8081
