@@ -51,7 +51,7 @@ kind: Service
 metadata:
   name: backend-service
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 4445
       targetPort: 4445
@@ -87,7 +87,7 @@ spec:
         number: 8080
   rules:
   - host: localhost
-  -  http:
+  - http:
       paths: # you define here your reverse proxy (replaces nginx one)
       - path: /api
         pathType: Prefix
