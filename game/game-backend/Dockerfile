@@ -1,14 +1,9 @@
 # Using official ubuntu image as a parent image
 FROM maven:3.8-openjdk-11
 
-# Setting the working directory to /app
-WORKDIR /app
+COPY /game /game
+COPY /map /map
+COPY target/game-backend-0.0.1.jar /
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# EXPOSE port
 EXPOSE 4445
-
-# Run spring boot application
-CMD ["mvn", "spring-boot:run"]
+CMD ["java", "-jar", "/game-backend-0.0.1.jar"]

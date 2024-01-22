@@ -50,12 +50,22 @@ build-front:
 
 build-job-docker-frontend:      
   stage: docker-build
+  needs: ["build-front"]
+  rules:
+    - changes:
+      - "*.md"
+      when: never
+    - changes:
+      - "game/game-frontend/**/*"
+      - ".gitlab-ci.yml"
+      when: always
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
     - echo "Building Docker Image"
     - cd ./game/game-frontend
     - echo "REGISTRY IMG :" $CI_REGISTRY_IMAGE
+    - ls dist/game-frontend/
     - docker build --pull -t $CI_REGISTRY_IMAGE/docker/front:latest . # build docker image
     - echo "Building complete in front-end."
     - docker push $CI_REGISTRY_IMAGE/docker/front:latest # push docker image on the INSA Repository
@@ -63,6 +73,15 @@ build-job-docker-frontend:
 
 build-job-docker-backend:      
   stage: docker-build
+  needs: ["build-back"]
+  rules:
+    - changes:
+      - "*.md"
+      when: never
+    - changes:
+      - "game/game-backend/**/*"
+      - ".gitlab-ci.yml"
+      when: always
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
