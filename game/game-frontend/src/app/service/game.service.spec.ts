@@ -30,7 +30,7 @@ describe('GameService', () => {
         "map":"000342850000079420284061739973186540000234978802957613000790284398425167427618395",
         "level":"easy"
       }
-    const req = httpTestingController.expectOne('http://localhost:4445/newGame/easy');
+    const req = httpTestingController.expectOne('api/newGame/easy');
     expect(req.request.method).toEqual('GET');
     req.flush(testData);
     const newGame: NewGame = await promise;
@@ -47,7 +47,7 @@ describe('GameService', () => {
         "map":"000342850000079420284061739973186540000234978802957613000790284398425167427618395",
         "level":"easy"
       }
-    const req = httpTestingController.expectOne('http://localhost:4445/game/easy');
+    const req = httpTestingController.expectOne('api/game/easy');
     expect(req.request.method).toEqual('GET');
     req.flush(testData);
     const existingGame: ExistingGame = await promise;
@@ -73,7 +73,7 @@ describe('GameService', () => {
         "player":"Tung"
       }
     ]
-    const req = httpTestingController.expectOne('http://localhost:4445/leaderboard/easy/1');
+    const req = httpTestingController.expectOne('api/leaderboard/easy/1');
     expect(req.request.method).toEqual('GET');
     req.flush(testData);
     const leaderboards: Array<Leaderboard> = await promise;

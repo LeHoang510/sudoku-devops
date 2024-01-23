@@ -44,7 +44,7 @@ public class GameController {
     @GetMapping(path = "/leaderboard/{level}/{mapId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> getLeaderboard(@PathVariable("mapId") final int id, @PathVariable("level") final String level) throws IOException {
         System.out.println("get leaderboard endpoint works");
-        return this.gameService.getLeaderboard(id, level);
+        return GameService.getLeaderboard(id, level);
     }
 
     // Save a game
@@ -52,7 +52,7 @@ public class GameController {
     public String saveGame(@RequestBody final Game game) throws IOException {
         System.out.println("save game endpoint works");
         System.out.println(game.toString());
-        if (this.gameService.saveGame(game)) {
+        if (GameService.saveGame(game)) {
             return "game saved";
         } else {
             return "game haven't been saved yet";
