@@ -172,7 +172,7 @@ export class Game {
         // Check if endgame if yes save gave in the backend
         if (this.checkEnd()&&!this.wSuggestion){
             if(Object.keys(this.errors).length === 0){
-                this.http.post<any>('http://localhost:4445/game', { 
+                this.http.post<any>('api/game', { 
                     "mapId":this.mapID,
                     "level":this.level,
                     "score":this.coups,
