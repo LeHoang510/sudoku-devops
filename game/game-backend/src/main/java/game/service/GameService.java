@@ -66,7 +66,6 @@ public class GameService {
         try {
             writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
             writer.append(m.id + " " + m.level + " " + m.map + "\n");
-
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -167,7 +166,7 @@ public class GameService {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while (null != (line = reader.readLine())) {
-                if ("".equals(line)) {
+                if (line.isEmpty()) {
                     break;
                 }
                 lines++;

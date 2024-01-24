@@ -3,7 +3,6 @@ package game.controller;
 import game.model.Game;
 import game.model.Map;
 import game.service.GameService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +18,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
 public class GameController {
-
-    @Autowired
-    private GameService gameService;
 
     // get an existing map
     @ResponseBody

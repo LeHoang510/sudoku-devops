@@ -3,32 +3,20 @@ package game.service;
 import game.model.Game;
 import game.model.Map;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({GameService.class, HttpClient.class, HttpRequest.class, HttpResponse.class})
 class GameServiceTest {
 
     @Test
-    void generateMapAndSaveMap() throws IOException, InterruptedException {
+    void generateMap() throws IOException, InterruptedException {
         /**
         // Mock HttpClient
         HttpClient mockHttpClient = Mockito.mock(HttpClient.class);
@@ -51,6 +39,9 @@ class GameServiceTest {
         int n = (int) Files.lines(Paths.get("map/easy")).count();
         Map res = GameService.generateMap("easy");
         assertEquals(res.map.length(), 81);
+        for (int i = 0; i < res.map.length(); i++) {
+            assertTrue(res.map.charAt(i) >= '0' && res.map.charAt(i) <= '9');
+        }
         assertEquals(res.level, "easy");
         assertEquals(res.id, (int) Files.lines(Paths.get("map/easy")).count() - 1);
         assertEquals(1, (int) Files.lines(Paths.get("map/easy")).count() - n);
@@ -71,10 +62,18 @@ class GameServiceTest {
     void getMap() throws IOException {
         Map m = GameService.getMap("hard");
         assertEquals(m.map.length(), 81);
+        for (int i = 0; i < m.map.length(); i++) {
+            assertTrue(m.map.charAt(i) >= '0' && m.map.charAt(i) <= '9');
+        }
         assertEquals(m.level, "hard");
         assertTrue(m.id >= 0 && m.id < (int) Files.lines(Paths.get("map/hard")).count());
         String map = Files.readAllLines(Paths.get("map/"+m.level)).get(m.id).split("\\s+")[2];
         assertEquals(m.map, map);
+    }
+
+    @Test
+    void saveMap(){
+        // already tested in generateMap
     }
 
     @Test
@@ -124,6 +123,7 @@ class GameServiceTest {
 
     @Test
     void getGameFromLine() {
+        // nothing to test
     }
 
     @Test
