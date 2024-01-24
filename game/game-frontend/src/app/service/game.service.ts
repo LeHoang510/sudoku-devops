@@ -55,7 +55,7 @@ export class GameService {
     this.hist.clear();
     console.log("generate game");
     // Get data of a generated game
-    const res = await this.http.get(`http://localhost:4445/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`api/newGame/${this.game.level}`,{'responseType': 'json'}).toPromise()
     // printout the data
     console.log(res)
     const body = JSON.parse(JSON.stringify(res))
@@ -86,7 +86,7 @@ export class GameService {
     this.game.wSuggestion = false;
     // Get data of an existing game
     console.log("call existing game");
-    const res = await this.http.get(`http://localhost:4445/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`api/game/${this.game.level}`,{'responseType': 'json'}).toPromise()
     // Print the data of the existing game acquired from server
     console.log(res);
     const body = JSON.parse(JSON.stringify(res))
@@ -116,7 +116,7 @@ export class GameService {
     this.scores=[]
     this.players=[]
     // Get the data of the leaderboard
-    const res = await this.http.get(`http://localhost:4445/leaderboard/${this.game.level}/`+idmap,{'responseType': 'json'}).toPromise()
+    const res = await this.http.get(`api/leaderboard/${this.game.level}/`+idmap,{'responseType': 'json'}).toPromise()
     console.log(res);
     // Add leaderboard data
     const body = JSON.parse(JSON.stringify(res))
@@ -130,14 +130,14 @@ export class GameService {
   }
 
   public getNewGame() : Promise<NewGame>{
-    return lastValueFrom(this.http.get<NewGame>(`http://localhost:4445/newGame/${this.game.level}`));
+    return lastValueFrom(this.http.get<NewGame>(`api/newGame/${this.game.level}`));
   }
 
   public getExistingGame() : Promise<ExistingGame>{
-    return lastValueFrom(this.http.get<ExistingGame>(`http://localhost:4445/game/${this.game.level}`));
+    return lastValueFrom(this.http.get<ExistingGame>(`api/game/${this.game.level}`));
   }
 
   public getLeaderBoard(idmap : string) : Promise<Array<Leaderboard>>{
-    return lastValueFrom(this.http.get<Array<Leaderboard>>(`http://localhost:4445/leaderboard/${this.game.level}/${idmap}`));
+    return lastValueFrom(this.http.get<Array<Leaderboard>>(`api/leaderboard/${this.game.level}/${idmap}`));
   }
 }

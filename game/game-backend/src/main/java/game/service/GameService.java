@@ -38,7 +38,7 @@ public class GameService {
         final HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        final Map res = new Map(countLine("map/" + level), response.body(), level);
+        final Map res = new Map(countLine("map/" + level), level, response.body());
         saveMap(res);
         System.out.println(res);
         return res;
@@ -66,7 +66,6 @@ public class GameService {
         try {
             writer = new BufferedWriter(new FileWriter("map/" + m.level, true));
             writer.append(m.id + " " + m.level + " " + m.map + "\n");
-
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -80,7 +79,7 @@ public class GameService {
 
     // constraint of safe game : Only one score (the best one) for one player on a given grid.
     // Save a game
-    public boolean saveGame(final Game g) throws IOException {
+    public static boolean saveGame(final Game g) throws IOException {
         // check if the player have play the game before
         boolean existed = false;
         final List<String> lines = Files.readAllLines(Paths.get("game/" + g.level));
@@ -119,7 +118,7 @@ public class GameService {
     }
 
     // Get leader board of a map
-    public List<Game> getLeaderboard(final int id, final String level) throws IOException {
+    public static List<Game> getLeaderboard(final int id, final String level) throws IOException {
         final List<Game> top5 = new ArrayList<>();
         final List<String> lines = Files.readAllLines(Paths.get("game/" + level));
         final Set<Integer> res = new HashSet<Integer>();
@@ -167,7 +166,7 @@ public class GameService {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while (null != (line = reader.readLine())) {
-                if ("".equals(line)) {
+                if (line.isEmpty()) {
                     break;
                 }
                 lines++;

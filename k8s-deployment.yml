@@ -16,7 +16,7 @@ spec:
         - name: secret-insa
       containers:
         - name: backend
-          image: "gitlab.insa-rennes.fr:5050/devops-2023/projet-cpoo-thuy-tu-thanh-tung/docker/back"
+          image: "gitlab.insa-rennes.fr:5050/devops-2023/projet-cpoo-thuy-tu-thanh-tung/docker/back:latest"
           imagePullPolicy: Always
           ports:
             - containerPort: 4445
@@ -40,7 +40,7 @@ spec:
         - name: secret-insa
       containers:
         - name: frontend
-          image: "gitlab.insa-rennes.fr:5050/devops-2023/projet-cpoo-thuy-tu-thanh-tung/docker/front"
+          image: "gitlab.insa-rennes.fr:5050/devops-2023/projet-cpoo-thuy-tu-thanh-tung/docker/front:latest"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -51,7 +51,7 @@ kind: Service
 metadata:
   name: backend-service
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 4445
       targetPort: 4445
@@ -87,7 +87,7 @@ spec:
         number: 8080
   rules:
   - host: localhost
-  -  http:
+  - http:
       paths: # you define here your reverse proxy (replaces nginx one)
       - path: /api
         pathType: Prefix
