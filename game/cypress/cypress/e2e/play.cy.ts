@@ -61,7 +61,7 @@ describe('Test play game', () => {
 
     cy.get('div.mat-form-field-flex').type('{selectall}{backspace} hoang');
 
-    cy.get('div.mat-select-value.ng-tns-c84-4').click();
+    cy.get('#mat-select-2 > .mat-select-trigger').click();
     cy.get('span.mat-option-text').contains('5').click();
 
     cy.get('button.button-undo-redo').contains('undo').click();
