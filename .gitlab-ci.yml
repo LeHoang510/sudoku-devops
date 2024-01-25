@@ -9,7 +9,7 @@ leaks:gitleaks:
     name: "zricethezav/gitleaks"
     entrypoint: [""]
   script:
-    - gitleaks --clear-cache
+    - gitleaks --only-new-files
     - gitleaks detect -v 
 
 build-back:
