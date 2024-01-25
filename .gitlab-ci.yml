@@ -1,15 +1,15 @@
 stages:
-  # - leaks
+  - leaks
   - build
   - docker-build
 
-# leaks:gitleaks:
-#   stage: leaks
-#   image: 
-#     name: "zricethezav/gitleaks"
-#     entrypoint: [""]
-#   script:
-#     - gitleaks detect -v 
+leaks:gitleaks:
+  stage: leaks
+  image: 
+    name: "zricethezav/gitleaks"
+    entrypoint: [""]
+  script:
+    - gitleaks detect -v 
 
 build-back:
   image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-maven:3.8-openjdk-17
