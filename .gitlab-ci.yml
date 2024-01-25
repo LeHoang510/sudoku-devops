@@ -9,6 +9,7 @@ leaks:gitleaks:
     name: "zricethezav/gitleaks"
     entrypoint: [""]
   script:
+    - gitleaks protect .
     - gitleaks protect -v 
   
 
