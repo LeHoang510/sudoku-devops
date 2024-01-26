@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
-  providers: []
 })
 export class BoardComponent implements OnInit,AfterViewInit {
 
@@ -49,7 +48,8 @@ export class BoardComponent implements OnInit,AfterViewInit {
 
   // set width of history component
   public ngAfterViewInit(): void {
-    this.histWidth = `${this.h.nativeElement.clientWidth}px`
+    // The line below will trigger an error because it updates the view in the ngAfterViewInit cycle
+    // this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
   //for testing
@@ -124,6 +124,8 @@ export class BoardComponent implements OnInit,AfterViewInit {
   }
 
   public rootRenderer(): UndoableSnapshot {
+    console.log("root renderer")
+    console.log(this.gameService.game)
     return SetValue.getSnapshot(this.gameService.game,-1,false);
   }
 }

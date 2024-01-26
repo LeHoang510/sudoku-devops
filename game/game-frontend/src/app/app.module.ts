@@ -56,7 +56,6 @@ import { FormBuilder } from "@angular/forms";
         MatDialogModule,
         AngularSplitModule,
         ReactiveFormsModule
-        
     ],
   providers: [
     interactoTreeUndoProviders(true),

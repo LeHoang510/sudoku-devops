@@ -72,6 +72,7 @@ export class GameService {
         this.m2.cas[i] = 1;
       }
     }
+    console.log(this.m.cas.join(''))
     // modify data of the leaderboard
     this.scores=[]
     this.players=[]
