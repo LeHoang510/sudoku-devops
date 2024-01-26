@@ -22,6 +22,7 @@ class GameControllerTest {
     @Autowired
     private MockMvc mockMvc;
     // Mock the GameService to isolate the controller and focus on testing it
+
     @Test
     void getMap() throws Exception {
         try (MockedStatic<GameService> mocked = mockStatic(GameService.class)) {
