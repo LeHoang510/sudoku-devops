@@ -2,6 +2,7 @@ stages:
   - leaks
   - build
   - docker-build
+  - test
 
 leaks:gitleaks:
   stage: leaks
@@ -103,3 +104,22 @@ build-job-docker-backend:
     - docker push $CI_REGISTRY_IMAGE/docker/back:latest # push docker image on the INSA Repository
     - echo "Push on docker repository OK"
 
+test-frontend:
+  image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-node:16.13.2
+  stage: test
+  cache:
+    paths:
+      - game/game-frontend/node_modules/
+  script:
+    - cd game/game-frontend
+    - npm install
+    - npm run test
+    - npm run eslint
+  rules:
+    - changes:
+      - "*.md"
+      when: never
+    - changes:
+      - "game/game-frontend/**/*"
+      - ".gitlab-ci.yml"
+      when: always
