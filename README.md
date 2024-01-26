@@ -90,7 +90,7 @@ microk8s enable dns
     ```
 - Create a secret to have access to gitlab insa : 
     ```
-    microk8s kubectl create secret generic secret-insa --from-file=.dockerconfigjson=${HOME}/.docker/config.json --type=kubernetes.io/dockerconfigjson
+    microk8s kubectl create secret generic secret-insa --from-file=.dockerconfigjson=${HOME}/.docker/config.json --type=kubernetes.io/dockerconfigjson -n game
     ```
 
 ### Deploy an app with Microk8s
