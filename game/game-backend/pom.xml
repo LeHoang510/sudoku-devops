@@ -133,7 +133,7 @@
                     </execution>
                     <execution>
                         <id>check-coverage</id>
-                        <phase>verify</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
