@@ -15,6 +15,7 @@ leaks:gitleaks:
   
 
 build-back:
+  when: on_success
   image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-maven:3.8-openjdk-17
   stage: build
   script:
@@ -28,7 +29,6 @@ build-back:
       - "game/game-backend/**/*"
       - ".gitlab-ci.yml"
       when: always
-    - when: on_success
   artifacts:
     paths:
       - game/game-backend/target/site/jacoco/jacoco.xml
@@ -38,6 +38,7 @@ build-back:
 build-front:
   image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-node:16.13.2
   stage: build
+  when: on_success
   cache:
     paths:
       - game/game-frontend/node_modules/
@@ -56,7 +57,6 @@ build-front:
       - "game/game-frontend/**/*"
       - ".gitlab-ci.yml"
       when: always
-    - when: on_success
   artifacts:
     paths:
       - game/game-frontend/dist/game-frontend/
@@ -73,7 +73,6 @@ build-job-docker-frontend:
       - "game/game-frontend/**/*"
       - ".gitlab-ci.yml"
       when: always
-    - when: on_success
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
@@ -97,7 +96,6 @@ build-job-docker-backend:
       - "game/game-backend/**/*"
       - ".gitlab-ci.yml"
       when: always
-    - when: on_success
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
@@ -117,7 +115,7 @@ test-frontend:
   script:
     - cd game/game-frontend
     - npm install
-    - ng test --code-coverage --browsers ChromeHeadless
+    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
     - npm run eslint
   rules:
     - changes:
