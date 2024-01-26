@@ -1,8 +1,8 @@
 stages:
   - leaks
+  - test
   - build
   - docker-build
-  - test
 
 leaks:gitleaks:
   stage: leaks
@@ -113,7 +113,7 @@ test-frontend:
   script:
     - cd game/game-frontend
     - npm install
-    - npm run test
+    - npm run test --code-coverage --browsers FirefoxHeadless
     - npm run eslint
   rules:
     - changes:
