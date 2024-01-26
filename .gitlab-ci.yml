@@ -113,7 +113,7 @@ test-frontend:
   script:
     - cd game/game-frontend
     - npm install
-    - npm run test --code-coverage --browsers FirefoxHeadless
+    - npm run test --code-coverage --browsers ChromeHeadless
     - npm run eslint
   rules:
     - changes:
