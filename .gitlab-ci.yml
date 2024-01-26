@@ -115,7 +115,7 @@ test-frontend:
   script:
     - cd game/game-frontend
     - npm install
-    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+    - npm run test -- --no-watch --no-progress --browsers=FirefoxHeadless
     - npm run eslint
   rules:
     - changes:
