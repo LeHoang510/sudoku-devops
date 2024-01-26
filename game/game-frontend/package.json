@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "snyk" : "snyk auth $SNYK_TOKEN && snyk test",
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
@@ -29,6 +30,7 @@
     "interacto-angular": "7.14.3",
     "karma-firefox-launcher": "^2.1.2",
     "rxjs": "~7.5.0",
+    "snyk": "^1.1275.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
