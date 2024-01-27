@@ -13,7 +13,7 @@ describe('BoardComponent', async () => {
   // Game service initializer
   let gameService: GameService;
   let httpTestingController: HttpTestingController;
-  
+
   beforeEach(async () => {
 
     const viewCompiler = await TestBed.configureTestingModule({
@@ -27,9 +27,9 @@ describe('BoardComponent', async () => {
     })
     gameService = TestBed.inject(GameService);
     httpTestingController = TestBed.inject(HttpTestingController);
-    gameService.game.level = Level.easy; 
+    gameService.game.level = Level.easy;
     const res : Promise<void>= gameService.initGame();
-    const testData = 
+    const testData =
       {
         "id": "11",
         "map":"000342850000079420284061739973186540000234978802957613000790284398425167427618395",
@@ -41,12 +41,11 @@ describe('BoardComponent', async () => {
 
     fixture = TestBed.createComponent(BoardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     viewCompiler.compileComponents();
   });
 
   it('should create', async() => {
     expect(component).toBeTruthy();
   });
-  
+
 });

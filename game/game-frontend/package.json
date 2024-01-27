@@ -7,11 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-<<<<<<< HEAD
     "snyk" : "snyk auth $SNYK_TOKEN && snyk test",
-=======
-    "snyk" : "snyk test",
->>>>>>> main
     "e2e": "ng e2e",
     "eslint": "npx eslint ."
   },
@@ -30,7 +26,6 @@
     "angular-split": "^14.1.0",
     "interacto": "7.3.0",
     "interacto-angular": "7.14.3",
-    "karma-firefox-launcher": "^2.1.2",
     "rxjs": "~7.5.0",
     "snyk": "^1.1275.0",
     "tslib": "^2.3.0",

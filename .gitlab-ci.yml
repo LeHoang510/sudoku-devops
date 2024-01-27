@@ -1,6 +1,6 @@
 stages:
-  - test
   - leaks
+  - test
   - build
   - docker-build
 
@@ -27,11 +27,12 @@ build-back:
     - changes:
       - "game/game-backend/**/*"
       - ".gitlab-ci.yml"
-      when: on_success
+      when: always
   artifacts:
     paths:
       - game/game-backend/target/site/jacoco/jacoco.xml
       - game/game-backend/target/game-backend-0.0.1.jar
+      - game/game-backend/target/dependency-check-report.html
     expire_in: 1 hour
     
 build-front:
@@ -93,7 +94,7 @@ build-job-docker-backend:
     - changes:
       - "game/game-backend/**/*"
       - ".gitlab-ci.yml"
-      when: always
+      when: on_success
   script:
     - echo "Docker login to INSA Repository..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD gitlab.insa-rennes.fr:5050 # Connexion to the INSA docker registry
