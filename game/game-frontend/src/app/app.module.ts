@@ -25,7 +25,6 @@ import { AngularSplitModule } from "angular-split";
 import { GameComponent } from './game/game/game.component';
 import { MenuComponent } from "./menu/menu.component";
 import { HeaderComponent } from './header/header.component';
-import { FormBuilder } from "@angular/forms";
 @NgModule({
   declarations: [
     AppComponent,
