@@ -1,0 +1,2 @@
+# untrack every file in node_modules in this gitignore file
+node_modules/*
