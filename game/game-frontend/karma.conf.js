@@ -46,20 +46,16 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome','ChromeHeadless','ChromeHeadlessCI', 'FirefoxHeadless'],
+    browsers: ['Chrome','ChromeHeadless'],
     customLaunchers: {
-      ChromeHeadlessCI: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      },
-      'FirefoxHeadless': {
-        base: 'Firefox',
+      ChromeHeadless: {
+        base: 'Chrome',
         flags: [
-          '-headless',
-        ],
-        prefs: {
-          'network.proxy.type': 0
-        }
+          '--no-sandbox',
+          '--disable-gpu',
+          '--headless',
+          '--remote-debugging-port=9222'
+        ]
       }
     },
     singleRun: false,

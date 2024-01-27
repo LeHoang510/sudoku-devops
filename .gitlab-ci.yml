@@ -1,6 +1,6 @@
 stages:
-  - leaks
   - test
+  - leaks
   - build
   - docker-build
 
@@ -105,16 +105,20 @@ build-job-docker-backend:
     - echo "Push on docker repository OK"
 
 test-frontend:
-  image: zenika/alpine-chrome
+  image: registry.gitlab.inria.fr/diverse/docker/docker-image/insa-node:16.13.2
   stage: test
   cache:
     paths:
       - game/game-frontend/node_modules/
+  variables:
+    CHROME_BIN: /usr/bin/chromium-browser
   script:
+    - apk add chromium
+    - ls /usr/bin/chromium-browser
     - cd game/game-frontend
     - npm install
     - npm run snyk
-    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+    - npm run test -- --no-watch --browsers=ChromeHeadless
     - npm run eslint
   rules:
     - changes:
