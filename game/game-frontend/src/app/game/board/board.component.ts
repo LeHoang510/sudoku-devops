@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
   setByKeyPossible : boolean = false
   histWidth : string
 
-  // for filling tiles of mat grid list 
+  // for filling tiles of mat grid list
   a = Array.from(Array(81).keys());
 
   public constructor (public gameService: GameService, private router : Router) {
@@ -49,12 +49,12 @@ export class BoardComponent implements OnInit,AfterViewInit {
   // set width of history component
   public ngAfterViewInit(): void {
     // The line below will trigger an error because it updates the view in the ngAfterViewInit cycle
-    // this.histWidth = `${this.h.nativeElement.clientWidth}px`
+    this.histWidth = `${this.h.nativeElement.clientWidth}px`
   }
 
   //for testing
   test(val : number, index : number){
-    // test swaping dim functions 
+    // test swaping dim functions
     // console.log(this.gameService.game.getX(index))
     // console.log(this.gameService.game.getY(index))
     // console.log(...this.gameService.game.getSq(index))
@@ -72,7 +72,7 @@ export class BoardComponent implements OnInit,AfterViewInit {
   // Interacto binding that maps the selection of a value in an Angular Material Select
   // for producing an undoable command SetValue
   public setValue(binder: PartialMatSelectBinder, index: number) {
-    
+
     binder.toProduce((i) => {
       console.log("inside setValue func")
       return new SetValue(parseInt(i.change?.value), index, this.gameService.game)
