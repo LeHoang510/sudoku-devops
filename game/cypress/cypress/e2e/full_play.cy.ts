@@ -1,19 +1,19 @@
 describe('Test a full game', () => {
   it ('Check contains', () => {
-    cy.intercept('GET', 'api/game/easy', { fixture: '/map/easy.json' }).as('getBoards');
-    cy.intercept('GET', 'api/game/hard', { fixture: '/map/hard.json' }).as('getBoards');
-    cy.intercept('GET', 'api/game/inhuman', { fixture: '/map/inhuman.json' }).as('getBoards');
-    cy.intercept('GET', 'api/game/insane', { fixture: '/map/insane.json' }).as('getBoards');
-    cy.intercept('GET', 'api/game/medium', { fixture: '/map/medium.json' }).as('getBoards');
-    cy.intercept('GET', 'api/game/very-hard', { fixture: '/map/very-hard.json' }).as('getBoards');
+    cy.intercept('GET', 'game/easy', { fixture: '/map/easy.json' }).as('getBoards');
+    cy.intercept('GET', 'game/hard', { fixture: '/map/hard.json' }).as('getBoards');
+    cy.intercept('GET', 'game/inhuman', { fixture: '/map/inhuman.json' }).as('getBoards');
+    cy.intercept('GET', 'game/insane', { fixture: '/map/insane.json' }).as('getBoards');
+    cy.intercept('GET', 'game/medium', { fixture: '/map/medium.json' }).as('getBoards');
+    cy.intercept('GET', 'game/very-hard', { fixture: '/map/very-hard.json' }).as('getBoards');
 
 
-    cy.intercept(`GET`, `api/leaderboard/easy/0`, { fixture: '/game/easy.json' }).as('getLeaderboard');
-    cy.intercept('GET', 'api/leaderboard/hard/0', { fixture: '/game/hard.json' }).as('getBoards');
-    cy.intercept('GET', 'api/leaderboard/inhuman/0', { fixture: '/game/inhuman.json' }).as('getBoards');
-    cy.intercept('GET', 'api/leaderboard/insane/0', { fixture: '/game/insane.json' }).as('getBoards');
-    cy.intercept('GET', 'api/leaderboard/medium/0', { fixture: '/game/medium.json' }).as('getBoards');
-    cy.intercept('GET', 'api/leaderboard/very-hard/0', { fixture: '/game/very-hard.json' }).as('getBoards');
+    cy.intercept(`GET`, `leaderboard/easy/0`, { fixture: '/game/easy.json' }).as('getLeaderboard');
+    cy.intercept('GET', 'leaderboard/hard/0', { fixture: '/game/hard.json' }).as('getBoards');
+    cy.intercept('GET', 'leaderboard/inhuman/0', { fixture: '/game/inhuman.json' }).as('getBoards');
+    cy.intercept('GET', 'leaderboard/insane/0', { fixture: '/game/insane.json' }).as('getBoards');
+    cy.intercept('GET', 'leaderboard/medium/0', { fixture: '/game/medium.json' }).as('getBoards');
+    cy.intercept('GET', 'leaderboard/very-hard/0', { fixture: '/game/very-hard.json' }).as('getBoards');
 
     cy.visit('/');
     cy.url().should('include', '/menu');
