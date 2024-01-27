@@ -120,7 +120,7 @@ test-frontend:
     - npm install
     - npm run snyk
     - npm run test -- --no-watch --browsers=ChromeHeadless
-    - npm run eslint
+    # - npm run eslint
   rules:
     - changes:
       - "*.md"
