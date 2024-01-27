@@ -2,7 +2,7 @@
 
 ## Project is developed by 
 - LE Vu Thuy Tu
-- Vu Thanh Tung
+- VU Thanh Tung
 - NGUYEN Le Hoang 
 
 
