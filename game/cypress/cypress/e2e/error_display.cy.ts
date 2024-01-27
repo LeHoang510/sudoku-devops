@@ -12,7 +12,7 @@ describe('Test error display', () => {
         ///////////////////////////////////////////////////////////
         cy.get('#mat-select-2 > .mat-select-trigger').click();
         cy.get('span.mat-option-text').contains('5').click();
-        cy.get('[style="left: calc((11.1111% - 0.888889px + 1px) * 7); width: calc((11.1111% - 0.888889px) * 1 + 0px); margin-top: 0px; padding-top: calc((11.1111% - 0.888889px) * 1 + 0px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
+        cy.get('[style="left: calc(77.7778% + 0.777778px); width: calc(11.1111% - 0.888889px); margin-top: 0px; padding-top: calc(11.1111% - 0.888889px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
     });
     it ('Check col', () => {
 
@@ -20,7 +20,7 @@ describe('Test error display', () => {
 
         cy.get('#mat-select-2 > .mat-select-trigger').click();
         cy.get('span.mat-option-text').contains('9').click();
-        cy.get('[style="left: 0px; width: calc((11.1111% - 0.888889px) * 1 + 0px); margin-top: calc((11.1111% - 0.888889px + 1px) * 3); padding-top: calc((11.1111% - 0.888889px) * 1 + 0px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
+        cy.get('[style="left: 0px; width: calc(11.1111% - 0.888889px); margin-top: calc(33.3333% + 0.333333px); padding-top: calc(11.1111% - 0.888889px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
     });
     it ('Check square', () => {
 
@@ -28,7 +28,7 @@ describe('Test error display', () => {
 
         cy.get('#mat-select-2 > .mat-select-trigger').click();
         cy.get('span.mat-option-text').contains('4').click();
-        cy.get('[style="left: calc((11.1111% - 0.888889px + 1px) * 2); width: calc((11.1111% - 0.888889px) * 1 + 0px); margin-top: calc((11.1111% - 0.888889px + 1px) * 2); padding-top: calc((11.1111% - 0.888889px) * 1 + 0px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
+        cy.get('[style="left: 0px; width: calc(11.1111% - 0.888889px); margin-top: calc(88.8889% + 0.888889px); padding-top: calc(11.1111% - 0.888889px);"] > .mat-grid-tile-content > .ng-star-inserted').should('have.css','background-color','rgb(240, 128, 128)');
 
     });
 })

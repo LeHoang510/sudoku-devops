@@ -28,8 +28,8 @@ describe('Test get board', () => {
 
     })
     it ('Check generate board', () => {
-        cy.intercept('GET', 'api/game/easy', { fixture: '/map/easy.json' }).as('getBoards');
-        cy.intercept('GET', 'api/newgame/easy', { fixture: '/map/easy.json' }).as('getBoards');
+        cy.intercept('GET', 'game/easy', { fixture: '/map/easy.json' }).as('getBoards');
+        cy.intercept('GET', 'newgame/easy', { fixture: '/map/easy.json' }).as('getBoards');
 
 
         cy.visit('/');
