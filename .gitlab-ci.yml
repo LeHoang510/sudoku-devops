@@ -111,10 +111,11 @@ test-frontend:
     paths:
       - game/game-frontend/node_modules/
   variables:
-    CHROME_BIN: /usr/bin/chromium-browser
+    CHROME_BIN: /usr/bin/chromium
   script:
-    - apk add chromium
-    - ls /usr/bin/chromium-browser
+    - apt update
+    - apt install -y chromium
+    - ls /usr/bin/chromium
     - cd game/game-frontend
     - npm install
     - npm run snyk
